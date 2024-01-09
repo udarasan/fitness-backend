@@ -18,12 +18,13 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/v1/trainer")
+@CrossOrigin(origins = "*")
 public class TrainerController {
     @Autowired
     private TrainerService trainerService;
     @Autowired
     private ResponseDTO responseDTO;
-    @CrossOrigin(origins = "http://localhost:63343")
+
     @PostMapping("/login")
     public ResponseEntity<ResponseDTO> loginTrainer(@RequestBody TrainerDTO trainerDTO) {
         if (trainerService.isValidTrainerCredentials(trainerDTO.getEmail(), trainerDTO.getPassword())) {
