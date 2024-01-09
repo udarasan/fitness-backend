@@ -23,7 +23,7 @@ public class TrainerController {
     private TrainerService trainerService;
     @Autowired
     private ResponseDTO responseDTO;
-
+    @CrossOrigin(origins = "http://localhost:63343")
     @PostMapping("/login")
     public ResponseEntity<ResponseDTO> loginTrainer(@RequestBody TrainerDTO trainerDTO) {
         if (trainerService.isValidTrainerCredentials(trainerDTO.getEmail(), trainerDTO.getPassword())) {
@@ -38,6 +38,7 @@ public class TrainerController {
             return new ResponseEntity<>(responseDTO, HttpStatus.BAD_GATEWAY);
         }
     }
+//    @CrossOrigin(origins = "http://localhost:63343")
     @PostMapping(value = "/registration")
     public ResponseEntity<ResponseDTO> registerUser(@RequestBody TrainerDTO trainerDTO) {
         try {
