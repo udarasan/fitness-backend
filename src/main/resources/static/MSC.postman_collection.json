@@ -135,9 +135,72 @@
 			"response": []
 		},
 		{
-			"name": "get All Users",
+			"name": "Add WorkOut Plan",
 			"request": {
 				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"wID\":0,\n    \"planName\":\"test-workout-plan\",\n    \"burnsCalorieCount\":\"200\",\n    \"planDetails\":\"chest press,incline press\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/workoutplan/save",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"workoutplan",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Mela Plan",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"mID\":0,\n    \"planName\":\"test-workout-plan\",\n    \"calorieCount\":\"200\",\n    \"planDetails\":\"chest press,incline press\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/mealPlan/save",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"mealPlan",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get All Users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -149,7 +212,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/v1/user/register",
+					"raw": "localhost:8080/api/v1/user/getAllUsers",
 					"host": [
 						"localhost"
 					],
@@ -158,7 +221,73 @@
 						"api",
 						"v1",
 						"user",
-						"register"
+						"getAllUsers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get All Work Out Plans",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"uID\":0,\n    \"name\":\"test-user\",\n    \"email\":\"test@gmail.com\",\n    \"password\":\"test123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/workoutplan/getAllWorkOutPlans",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"workoutplan",
+						"getAllWorkOutPlans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get All Meal Plans",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"uID\":0,\n    \"name\":\"test-user\",\n    \"email\":\"test@gmail.com\",\n    \"password\":\"test123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/mealPlan/getAllMealPlans",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"mealPlan",
+						"getAllMealPlans"
 					]
 				}
 			},
