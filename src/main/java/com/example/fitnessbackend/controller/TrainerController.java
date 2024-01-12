@@ -41,7 +41,7 @@ public class TrainerController {
     }
 //    @CrossOrigin(origins = "http://localhost:63343")
     @PostMapping(value = "/registration")
-    public ResponseEntity<ResponseDTO> registerUser(@RequestBody TrainerDTO trainerDTO) {
+    public ResponseEntity<ResponseDTO> registerTrainer(@RequestBody TrainerDTO trainerDTO) {
         try {
             int res = trainerService.saveTrainer(trainerDTO);
             if (res==201) {
@@ -68,9 +68,10 @@ public class TrainerController {
         }
     }
     @GetMapping("/getAllTrainers")
-    public ResponseEntity<ResponseDTO> getAllUsers() {
+    public ResponseEntity<ResponseDTO> getAllTrainers() {
         try {
             List<TrainerDTO> trainerDTOS = trainerService.getAllTrainers();
+            System.out.println(trainerDTOS);
             if(trainerDTOS==null){
                 responseDTO.setCode(VarList.Bad_Gateway);
                 responseDTO.setMessage("No Data");

@@ -29,6 +29,7 @@ public class UserController {
     @PostMapping(value = "/registration")
     public ResponseEntity<ResponseDTO> registerUser(@RequestBody UserDTO userDTO) {
         try {
+            System.out.println(userDTO);
             int res = userService.saveUser(userDTO);
             if (res==201) {
                 responseDTO.setCode(VarList.Created);

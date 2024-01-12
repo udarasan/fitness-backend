@@ -24,7 +24,9 @@ public class Trainer {
     private String password;
     private String category;
     // Add other trainer-related fields as needed
-    @OneToMany(mappedBy = "trainer", cascade = CascadeType.ALL)
+    @OneToMany( mappedBy = "trainer", cascade = CascadeType.ALL)
     private List<User> users;
+
+
 
 }

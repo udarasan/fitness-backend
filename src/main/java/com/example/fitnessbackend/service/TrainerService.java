@@ -32,7 +32,8 @@ public class TrainerService {
 
     public List<TrainerDTO> getAllTrainers() {
         List<Trainer> users=trainerRepository.findAll();
-        return modelMapper.map(users, new TypeToken<ArrayList<UserDTO>>() {
+        System.out.println(users);
+        return modelMapper.map(users, new TypeToken<ArrayList<TrainerDTO>>() {
         }.getType());
 
     }

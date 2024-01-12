@@ -1,7 +1,9 @@
 package com.example.fitnessbackend.service;
 
 import com.example.fitnessbackend.dto.UserDTO;
+import com.example.fitnessbackend.entity.Trainer;
 import com.example.fitnessbackend.entity.User;
+import com.example.fitnessbackend.repo.TrainerRepository;
 import com.example.fitnessbackend.repo.UserRepository;
 import com.example.fitnessbackend.util.VarList;
 import org.modelmapper.ModelMapper;
@@ -22,7 +24,8 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private TrainerRepository trainerRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -33,7 +36,16 @@ public class UserService {
         if (userRepository.existsByEmail(userDTO.getEmail())) {
             return VarList.Not_Acceptable;
         } else {
-            userRepository.save(modelMapper.map(userDTO, User.class));
+            Trainer trainer = trainerRepository.findById(userDTO.getTrainer_id()).orElse(null);
+
+            // Map UserDTO to User entity
+            User user = modelMapper.map(userDTO, User.class);
+
+            // Set the Trainer for the User
+            user.setTrainer(trainer);
+
+            // Save the User entity
+            userRepository.save(user);
             return VarList.Created;
         }
     }
