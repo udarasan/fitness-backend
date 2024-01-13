@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class WorkOutPlanDTO {
 
-    private int mid;
+    private int wid;
     private String planName;
     private String planDetails;
     private String burnsCalorieCount;

@@ -19,18 +19,18 @@ import java.util.List;
 @Service
 public class WorkOutPlanService {
     @Autowired
-    private WorkOutPlanRepository mealPlanRepository;
+    private WorkOutPlanRepository workOutPlanRepository;
     @Autowired
     private ModelMapper modelMapper;
 
 
     public int saveWorkOutPlan(WorkOutPlanDTO workOutPlanDTO) {
-        mealPlanRepository.save(modelMapper.map(workOutPlanDTO, WorkOutPlan.class));
+        workOutPlanRepository.save(modelMapper.map(workOutPlanDTO, WorkOutPlan.class));
         return VarList.Created;
     }
 
     public List<WorkOutPlanDTO> getAllWorkOutPlans() {
-        List<WorkOutPlan> mealPlans=mealPlanRepository.findAll();
+        List<WorkOutPlan> mealPlans=workOutPlanRepository.findAll();
         return modelMapper.map(mealPlans, new TypeToken<ArrayList<WorkOutPlanDTO>>() {
         }.getType());
     }
