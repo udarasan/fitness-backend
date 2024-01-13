@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @TimeStamp 2024-01-10 18:10
@@ -33,5 +34,15 @@ public class WorkOutPlanService {
         List<WorkOutPlan> mealPlans=workOutPlanRepository.findAll();
         return modelMapper.map(mealPlans, new TypeToken<ArrayList<WorkOutPlanDTO>>() {
         }.getType());
+    }
+
+    public List<WorkOutPlanDTO> searchWorkouts(String partialName) {
+        List<WorkOutPlan> plans = workOutPlanRepository.findByPlanNameStartingWith(partialName);
+
+        List<WorkOutPlanDTO> workOutPlanDTOs = plans.stream()
+                .map(plan -> modelMapper.map(plan, WorkOutPlanDTO.class))
+                .collect(Collectors.toList());
+
+        return workOutPlanDTOs;
     }
 }
