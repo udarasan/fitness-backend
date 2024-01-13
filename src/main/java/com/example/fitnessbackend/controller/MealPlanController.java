@@ -53,7 +53,7 @@ public class MealPlanController {
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/getAllMealPlans")
+    @GetMapping(value = "/getAllMealPlans")
     public ResponseEntity<ResponseDTO> getAllMealPlans() {
         try {
             List<MealPlanDTO> mealPlanDTOS = mealPlanService.getAllMealPlans();

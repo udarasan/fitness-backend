@@ -67,7 +67,7 @@ public class TrainerController {
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/getAllTrainers")
+    @GetMapping(value = "/getAllTrainers")
     public ResponseEntity<ResponseDTO> getAllTrainers() {
         try {
             List<TrainerDTO> trainerDTOS = trainerService.getAllTrainers();
@@ -84,6 +84,7 @@ public class TrainerController {
             responseDTO.setData(trainerDTOS);
             return new ResponseEntity<>(responseDTO, HttpStatus.ACCEPTED);
         } catch (Exception e) {
+            System.out.println(e);
             responseDTO.setCode(VarList.Internal_Server_Error);
             responseDTO.setMessage(e.getMessage());
             responseDTO.setData(e);

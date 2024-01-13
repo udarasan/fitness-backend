@@ -55,6 +55,8 @@ public class UserController {
         }
     }
 
+
+
     @PostMapping("/login")
     public ResponseEntity<ResponseDTO> loginUser(@RequestBody UserDTO userDTO) {
         if (userService.isValidUserCredentials(userDTO.getEmail(), userDTO.getPassword())) {
@@ -119,10 +121,11 @@ public class UserController {
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/getAllUsers")
+    @GetMapping(value = "/getAllUsers")
     public ResponseEntity<ResponseDTO> getAllUsers() {
         try {
             List<UserDTO> userDTO = userService.getAllUsers();
+            System.out.println(userDTO);
             if(userDTO==null){
                 responseDTO.setCode(VarList.Bad_Gateway);
                 responseDTO.setMessage("No Data");

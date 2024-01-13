@@ -24,9 +24,7 @@ public class Trainer {
     private String password;
     private String category;
     // Add other trainer-related fields as needed
-    @OneToMany( mappedBy = "trainer", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "trainer")
     private List<User> users;
-
-
 
 }

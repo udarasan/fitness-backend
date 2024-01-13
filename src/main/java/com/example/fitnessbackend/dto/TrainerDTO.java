@@ -23,5 +23,5 @@ public class TrainerDTO {
     private String password;
     private String category;
     // Add other trainer-related fields as needed
-    private List<User> users;
+    private List<UserDTO> users;
 }

@@ -53,7 +53,7 @@ public class WorkOutPlanController {
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/getAllWorkOutPlans")
+    @GetMapping(value = "/getAllWorkOutPlans")
     public ResponseEntity<ResponseDTO> getAllWorkOutPlans() {
         try {
             List<WorkOutPlanDTO> allWorkOutPlans = workOutPlanService.getAllWorkOutPlans();

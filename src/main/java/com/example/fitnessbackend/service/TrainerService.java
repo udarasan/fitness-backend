@@ -8,11 +8,14 @@ import com.example.fitnessbackend.repo.TrainerRepository;
 import com.example.fitnessbackend.util.VarList;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @TimeStamp 2024-01-09 07:37
@@ -31,10 +34,30 @@ public class TrainerService {
     }
 
     public List<TrainerDTO> getAllTrainers() {
-        List<Trainer> users=trainerRepository.findAll();
-        System.out.println(users);
-        return modelMapper.map(users, new TypeToken<ArrayList<TrainerDTO>>() {
-        }.getType());
+//        List<Trainer> users=trainerRepository.findAll();
+//
+//        return modelMapper.map(users, new TypeToken<ArrayList<TrainerDTO>>() {
+//        }.getType());
+
+        List<Trainer> trainers = trainerRepository.findAll();
+
+        // Configure modelMapper to handle the mapping of trainer_id in UserDTO
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.STRICT);
+
+        Type listType = new TypeToken<ArrayList<TrainerDTO>>() {}.getType();
+        return trainers.stream()
+                .map(trainer -> {
+                    TrainerDTO trainerDTO = modelMapper.map(trainer, TrainerDTO.class);
+                    List<UserDTO> userDTOs = modelMapper.map(trainer.getUsers(), new TypeToken<ArrayList<UserDTO>>() {}.getType());
+
+                    // Set the trainer_id in each UserDTO
+                    userDTOs.forEach(userDTO -> userDTO.setTrainer_id((trainer.getTID())));
+
+                    trainerDTO.setUsers(userDTOs);
+                    return trainerDTO;
+                })
+                .collect(Collectors.toList());
 
     }
 
