@@ -91,4 +91,34 @@ public class TrainerController {
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PostMapping(value = "/update")
+    public ResponseEntity<ResponseDTO> updateTrainer(@RequestBody TrainerDTO trainerDTO) {
+        System.out.println("update");
+        System.out.println(trainerDTO);
+        try {
+            int res = trainerService.updateTrainer(trainerDTO);
+            if (res==201) {
+                responseDTO.setCode(VarList.Created);
+                responseDTO.setMessage("success");
+                responseDTO.setData(trainerDTO);
+                return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
+            } else if (res==406) {
+                responseDTO.setCode(VarList.Not_Acceptable);
+                responseDTO.setMessage("Email Not Available ");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.NOT_ACCEPTABLE);
+            } else {
+                responseDTO.setCode(VarList.Bad_Gateway);
+                responseDTO.setMessage("Error");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.BAD_GATEWAY);
+            }
+        } catch (Exception e) {
+            responseDTO.setCode(VarList.Internal_Server_Error);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setData(null);
+            return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

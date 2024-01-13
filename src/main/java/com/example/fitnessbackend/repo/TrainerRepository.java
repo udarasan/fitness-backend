@@ -4,6 +4,8 @@ import com.example.fitnessbackend.entity.Trainer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @TimeStamp 2024-01-09 07:36
  * @ProjectDetails fitness-backend
@@ -13,4 +15,8 @@ public interface TrainerRepository  extends JpaRepository<Trainer,Integer> {
     Trainer findByEmailAndPassword(String username, String password);
     boolean existsByEmail(String email);
 
+
+    Trainer findByEmail(String email);
+
+    List<Trainer> findAllByEmail(String email);
 }
