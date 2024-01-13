@@ -80,7 +80,15 @@ public class TrainerService {
             trainerRepository.save(modelMapper.map(trainerDTO, Trainer.class));
             return VarList.Created;
         }
+    }
 
 
+    public int deleteTrainer(String id) {
+        if (!trainerRepository.existsById(Integer.valueOf(id))) {
+            return VarList.Not_Acceptable;
+        } else {
+            trainerRepository.deleteById(Integer.valueOf(id));
+            return VarList.Created;
+        }
     }
 }
