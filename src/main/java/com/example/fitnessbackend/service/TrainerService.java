@@ -74,20 +74,11 @@ public class TrainerService {
 
 
     public int updateTrainer(TrainerDTO trainerDTO) {
-        String email = trainerDTO.getEmail();
-        System.out.println(email);
-
-        Optional<Trainer> existingTrainerOptional = Optional.ofNullable(trainerRepository.findByEmail(email));
-
-        if (existingTrainerOptional.isPresent()) {
-            // Trainer with the given email exists, update it
-            Trainer existingTrainer = existingTrainerOptional.get();
-            modelMapper.map(trainerDTO, existingTrainer);
-            trainerRepository.save(existingTrainer);
-            return VarList.Created;
-        } else {
-            // No trainer with the given email exists, return a status indicating not acceptable
+        if (!trainerRepository.existsByEmail(trainerDTO.getEmail())) {
             return VarList.Not_Acceptable;
+        } else {
+            trainerRepository.save(modelMapper.map(trainerDTO, Trainer.class));
+            return VarList.Created;
         }
 
 
