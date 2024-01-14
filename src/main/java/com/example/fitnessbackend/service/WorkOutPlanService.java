@@ -1,6 +1,7 @@
 package com.example.fitnessbackend.service;
 
 import com.example.fitnessbackend.dto.WorkOutPlanDTO;
+import com.example.fitnessbackend.entity.Trainer;
 import com.example.fitnessbackend.entity.WorkOutPlan;
 import com.example.fitnessbackend.repo.WorkOutPlanRepository;
 import com.example.fitnessbackend.util.VarList;
@@ -44,5 +45,23 @@ public class WorkOutPlanService {
                 .collect(Collectors.toList());
 
         return workOutPlanDTOs;
+    }
+
+    public int updateWorkOut(WorkOutPlanDTO workOutPlanDTO) {
+        if (!workOutPlanRepository.existsById(workOutPlanDTO.getWid())) {
+            return VarList.Not_Acceptable;
+        } else {
+            workOutPlanRepository.save(modelMapper.map(workOutPlanDTO, WorkOutPlan.class));
+            return VarList.Created;
+        }
+    }
+
+    public int deleteWorkout(String id) {
+        if (!workOutPlanRepository.existsById(Integer.valueOf(id))) {
+            return VarList.Not_Acceptable;
+        } else {
+            workOutPlanRepository.deleteById(Integer.valueOf(id));
+            return VarList.Created;
+        }
     }
 }

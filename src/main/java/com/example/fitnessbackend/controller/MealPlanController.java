@@ -2,6 +2,7 @@ package com.example.fitnessbackend.controller;
 
 import com.example.fitnessbackend.dto.MealPlanDTO;
 import com.example.fitnessbackend.dto.ResponseDTO;
+import com.example.fitnessbackend.dto.TrainerDTO;
 import com.example.fitnessbackend.service.MealPlanService;
 import com.example.fitnessbackend.util.VarList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,4 +76,74 @@ public class MealPlanController {
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @PostMapping(value = "/update")
+    public ResponseEntity<ResponseDTO> updateMealPlan(@RequestBody MealPlanDTO mealPlanDTO) {
+        System.out.println("update");
+        System.out.println(mealPlanDTO);
+        try {
+            int res = mealPlanService.updateMealPlan(mealPlanDTO);
+            if (res==201) {
+                responseDTO.setCode(VarList.Created);
+                responseDTO.setMessage("success");
+                responseDTO.setData(mealPlanDTO);
+                return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
+            } else if (res==406) {
+                responseDTO.setCode(VarList.Not_Acceptable);
+                responseDTO.setMessage("Email Not Available ");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.NOT_ACCEPTABLE);
+            } else {
+                responseDTO.setCode(VarList.Bad_Gateway);
+                responseDTO.setMessage("Error");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.BAD_GATEWAY);
+            }
+        } catch (Exception e) {
+            responseDTO.setCode(VarList.Internal_Server_Error);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setData(null);
+            return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+
+    @DeleteMapping (value = "/delete/{id}")
+    public ResponseEntity<ResponseDTO> deleteMealPlan(@PathVariable int id) {
+        System.out.println("update");
+        System.out.println(id);
+        try {
+            int res = mealPlanService.deleteMealPlan(id);
+            if (res==201) {
+                responseDTO.setCode(VarList.Created);
+                responseDTO.setMessage("success");
+                responseDTO.setData(id);
+                return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
+            } else if (res==406) {
+                responseDTO.setCode(VarList.Not_Acceptable);
+                responseDTO.setMessage("Email Not Available ");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.NOT_ACCEPTABLE);
+            } else {
+                responseDTO.setCode(VarList.Bad_Gateway);
+                responseDTO.setMessage("Error");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.BAD_GATEWAY);
+            }
+        } catch (Exception e) {
+            responseDTO.setCode(VarList.Internal_Server_Error);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setData(null);
+            return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+
 }
+
+
