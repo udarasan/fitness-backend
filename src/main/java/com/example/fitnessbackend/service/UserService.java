@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -110,9 +111,8 @@ public class UserService {
         }
     }
 
-    public int generateNextUserId() {
-
-        int latestId =  userRepository.findTopByOrderByUidDesc().orElse(new User()).getUID();
-        return latestId + 1;
-    }
+//    public String generateNextUserId() {
+////        Optional<User> latestUser = userRepository.findTopByOrderByUIDDesc();
+////        return latestUser.map(User::getUID).orElse("0");
+//    }
 }

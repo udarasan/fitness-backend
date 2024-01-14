@@ -179,9 +179,9 @@ public class UserController {
     }
 
 
-    @GetMapping("/generateNextUserId")
-    public ResponseEntity<Integer> generateNextUserId() {
-        int nextUserId = userService.generateNextUserId();
-        return new ResponseEntity<>(nextUserId, HttpStatus.OK);
-    }
+//    @GetMapping("/generateNextUserId")
+//    public ResponseEntity<String> generateNextUserId() {
+//        String nextUserId = userService.generateNextUserId();
+//        return new ResponseEntity<>(nextUserId, HttpStatus.OK);
+//    }
 }
