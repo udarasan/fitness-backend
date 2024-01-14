@@ -25,5 +25,9 @@ public class User {
     @JoinColumn(name = "trainer_id")
     private Trainer trainer;
 
+    @ManyToOne
+    @JoinColumn(name = "meal_plan_id")
+    private MealPlan mealPlanId;
+
 
 }
