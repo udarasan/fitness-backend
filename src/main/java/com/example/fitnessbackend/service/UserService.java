@@ -101,38 +101,6 @@ public class UserService {
         }
     }
 
-//    public int updateUser(UserDTO userDTO) {
-////        if (!userRepository.existsByEmail(userDTO.getEmail())) {
-////            return VarList.Not_Acceptable;
-////        } else {
-////            userRepository.save(modelMapper.map(userDTO, User.class));
-////            return VarList.Created;
-////        }
-//        Optional<User> existingUserOptional = Optional.ofNullable(userRepository.findByEmail(userDTO.getEmail()));
-//
-//        if (existingUserOptional.isPresent()) {
-//            System.out.println("hello");
-//            // User exists, update its fields including foreign keys
-//            User existingUser = existingUserOptional.get();
-//            System.out.println(existingUser);
-//            modelMapper.map(userDTO, existingUser);
-//            int trainerId = userDTO.getTrainer_id();
-//            int workOutId = userDTO.getWorkout_id();
-//            Trainer trainer = trainerRepository.findById(trainerId).orElse(null);
-//            WorkOutPlan workOutPlan = workOutPlanRepository.findById(workOutId).orElse(null);
-//            existingUser.setWorkOutPlanId(workOutPlan);
-//            existingUser.setTrainer(trainer);
-//            System.out.println(existingUser+"   after");
-////            modelMapper.map(userDTO, existingUser);
-//            userRepository.save(existingUser);
-//            return VarList.Created;
-//        } else {
-//            // User with the given email does not exist
-//            return VarList.Not_Acceptable;
-//        }
-//
-//    }
-//
     public int deleteUser(String id) {
 
         if (!userRepository.existsById(Integer.valueOf(id))) {
