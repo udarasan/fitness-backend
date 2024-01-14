@@ -1,11 +1,17 @@
 package com.example.fitnessbackend.service;
 
 import com.example.fitnessbackend.dto.UserDTO;
+import com.example.fitnessbackend.entity.MealPlan;
 import com.example.fitnessbackend.entity.Trainer;
 import com.example.fitnessbackend.entity.User;
+import com.example.fitnessbackend.entity.WorkOutPlan;
+import com.example.fitnessbackend.repo.MealPlanRepository;
 import com.example.fitnessbackend.repo.TrainerRepository;
 import com.example.fitnessbackend.repo.UserRepository;
+import com.example.fitnessbackend.repo.WorkOutPlanRepository;
 import com.example.fitnessbackend.util.VarList;
+import jakarta.persistence.EntityNotFoundException;
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.modelmapper.convention.MatchingStrategies;
@@ -30,7 +36,10 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private TrainerRepository trainerRepository;
-
+    @Autowired
+    private MealPlanRepository mealPlanRepository;
+    @Autowired
+    private WorkOutPlanRepository workOutPlanRepository;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -92,15 +101,38 @@ public class UserService {
         }
     }
 
-    public int updateUser(UserDTO userDTO) {
-        if (!userRepository.existsByEmail(userDTO.getEmail())) {
-            return VarList.Not_Acceptable;
-        } else {
-            userRepository.save(modelMapper.map(userDTO, User.class));
-            return VarList.Created;
-        }
-    }
-
+//    public int updateUser(UserDTO userDTO) {
+////        if (!userRepository.existsByEmail(userDTO.getEmail())) {
+////            return VarList.Not_Acceptable;
+////        } else {
+////            userRepository.save(modelMapper.map(userDTO, User.class));
+////            return VarList.Created;
+////        }
+//        Optional<User> existingUserOptional = Optional.ofNullable(userRepository.findByEmail(userDTO.getEmail()));
+//
+//        if (existingUserOptional.isPresent()) {
+//            System.out.println("hello");
+//            // User exists, update its fields including foreign keys
+//            User existingUser = existingUserOptional.get();
+//            System.out.println(existingUser);
+//            modelMapper.map(userDTO, existingUser);
+//            int trainerId = userDTO.getTrainer_id();
+//            int workOutId = userDTO.getWorkout_id();
+//            Trainer trainer = trainerRepository.findById(trainerId).orElse(null);
+//            WorkOutPlan workOutPlan = workOutPlanRepository.findById(workOutId).orElse(null);
+//            existingUser.setWorkOutPlanId(workOutPlan);
+//            existingUser.setTrainer(trainer);
+//            System.out.println(existingUser+"   after");
+////            modelMapper.map(userDTO, existingUser);
+//            userRepository.save(existingUser);
+//            return VarList.Created;
+//        } else {
+//            // User with the given email does not exist
+//            return VarList.Not_Acceptable;
+//        }
+//
+//    }
+//
     public int deleteUser(String id) {
 
         if (!userRepository.existsById(Integer.valueOf(id))) {
@@ -108,6 +140,39 @@ public class UserService {
         } else {
             userRepository.deleteById(Integer.valueOf(id));
             return VarList.Created;
+        }
+    }
+
+    public int updateUser(UserDTO userDTO) {
+        Optional<User> existingUserOptional = Optional.ofNullable(userRepository.findByEmail(userDTO.getEmail()));
+
+        if (existingUserOptional.isPresent()) {
+
+
+            User existingUser = existingUserOptional.get();
+            modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+
+            modelMapper.map(userDTO, existingUser);
+
+            int trainerId = userDTO.getTrainer_id();
+            int workOutId = userDTO.getWorkout_id();
+            int mealPlanId = userDTO.getMeal_id();
+            Trainer trainer = trainerRepository.findById(trainerId).orElse(null);
+            WorkOutPlan workOutPlan = workOutPlanRepository.findById(workOutId).orElse(null);
+            MealPlan mealPlan = mealPlanRepository.findById(mealPlanId).orElse(null);
+
+
+            existingUser.setTrainer(trainer);
+            existingUser.setWorkOutPlan(workOutPlan);
+            existingUser.setMealPlan(mealPlan);
+
+
+            userRepository.save(existingUser);
+
+            return VarList.Created;
+        } else {
+            // User with the given email does not exist
+            return VarList.Not_Acceptable;
         }
     }
 

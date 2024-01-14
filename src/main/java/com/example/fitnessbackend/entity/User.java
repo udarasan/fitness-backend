@@ -27,11 +27,11 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "meal_plan_id")
-    private MealPlan mealPlanId;
+    private MealPlan mealPlan;
 
     @ManyToOne
-    @JoinColumn(name = "workout_plan_id")
-    private WorkOutPlan workOutPlanId;
+    @JoinColumn(name = "workout_id")
+    private WorkOutPlan workOutPlan;
 
 
 }

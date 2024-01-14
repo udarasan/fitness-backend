@@ -23,6 +23,6 @@ public class WorkOutPlan {
     private String planDetails;
     private String burnsCalorieCount;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "workOutPlanId")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "workOutPlan")
     private List<User> user;
 }

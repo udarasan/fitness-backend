@@ -72,7 +72,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/update")
+    @PostMapping(value = "/update")
     public ResponseEntity<ResponseDTO> updateUser(@RequestBody UserDTO userDTO) {
         System.out.println("update");
         System.out.println(userDTO);
