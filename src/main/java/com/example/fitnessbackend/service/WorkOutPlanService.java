@@ -55,4 +55,13 @@ public class WorkOutPlanService {
             return VarList.Created;
         }
     }
+
+    public int deleteWorkout(String id) {
+        if (!workOutPlanRepository.existsById(Integer.valueOf(id))) {
+            return VarList.Not_Acceptable;
+        } else {
+            workOutPlanRepository.deleteById(Integer.valueOf(id));
+            return VarList.Created;
+        }
+    }
 }
