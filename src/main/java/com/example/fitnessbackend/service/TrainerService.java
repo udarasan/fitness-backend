@@ -82,7 +82,6 @@ public class TrainerService {
         }
     }
 
-
     public int deleteTrainer(String id) {
         if (!trainerRepository.existsById(Integer.valueOf(id))) {
             return VarList.Not_Acceptable;

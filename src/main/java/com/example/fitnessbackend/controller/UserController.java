@@ -72,8 +72,10 @@ public class UserController {
         }
     }
 
-    @PostMapping("/updateUser")
+    @PostMapping("/update")
     public ResponseEntity<ResponseDTO> updateUser(@RequestBody UserDTO userDTO) {
+        System.out.println("update");
+        System.out.println(userDTO);
         try {
             int res = userService.updateUser(userDTO);
             if (res==201) {
@@ -143,5 +145,43 @@ public class UserController {
             responseDTO.setData(e);
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<ResponseDTO> deleteTrainer(@PathVariable String id) {
+        System.out.println("delete");
+        System.out.println(id);
+        try {
+            int res = userService.deleteUser(id);
+            if (res==201) {
+                responseDTO.setCode(VarList.No_Content);
+                responseDTO.setMessage("success");
+                responseDTO.setData(id);
+                return new ResponseEntity<>(responseDTO, HttpStatus.NO_CONTENT);
+            } else if (res==406) {
+                responseDTO.setCode(VarList.Not_Acceptable);
+                responseDTO.setMessage("Email Not Available ");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.NOT_ACCEPTABLE);
+            } else {
+                responseDTO.setCode(VarList.Bad_Gateway);
+                responseDTO.setMessage("Error");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.BAD_GATEWAY);
+            }
+        } catch (Exception e) {
+            responseDTO.setCode(VarList.Internal_Server_Error);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setData(null);
+            return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @GetMapping("/generateNextUserId")
+    public ResponseEntity<Integer> generateNextUserId() {
+        int nextUserId = userService.generateNextUserId();
+        return new ResponseEntity<>(nextUserId, HttpStatus.OK);
     }
 }

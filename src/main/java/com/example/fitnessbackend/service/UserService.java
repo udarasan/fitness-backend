@@ -99,4 +99,20 @@ public class UserService {
             return VarList.Created;
         }
     }
+
+    public int deleteUser(String id) {
+
+        if (!userRepository.existsById(Integer.valueOf(id))) {
+            return VarList.Not_Acceptable;
+        } else {
+            userRepository.deleteById(Integer.valueOf(id));
+            return VarList.Created;
+        }
+    }
+
+    public int generateNextUserId() {
+
+        int latestId =  userRepository.findTopByOrderByUidDesc().orElse(new User()).getUID();
+        return latestId + 1;
+    }
 }
