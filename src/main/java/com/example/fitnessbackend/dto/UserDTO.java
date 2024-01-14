@@ -19,4 +19,6 @@ public class UserDTO {
     private String email;
     private String password;
     private int trainer_id;
+    private String meal_id;
+    private String workout_id;
 }
