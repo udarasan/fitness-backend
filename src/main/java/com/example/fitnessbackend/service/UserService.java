@@ -87,6 +87,8 @@ public class UserService {
                     if (user.getTrainer() != null) {
                         userDTO.setTrainer_id(user.getTrainer().getTID());
                     }
+                    userDTO.setMeal_plan_id(user.getMealPlan().getMID());
+                    userDTO.setWorkout_id(user.getWorkOutPlan().getWID());
                     return userDTO;
                 })
                 .collect(Collectors.toList());
@@ -124,7 +126,7 @@ public class UserService {
 
             int trainerId = userDTO.getTrainer_id();
             int workOutId = userDTO.getWorkout_id();
-            int mealPlanId = userDTO.getMeal_id();
+            int mealPlanId = userDTO.getMeal_plan_id();
             Trainer trainer = trainerRepository.findById(trainerId).orElse(null);
             WorkOutPlan workOutPlan = workOutPlanRepository.findById(workOutId).orElse(null);
             MealPlan mealPlan = mealPlanRepository.findById(mealPlanId).orElse(null);

@@ -151,4 +151,29 @@ public class TrainerController {
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @GetMapping("/getOneTrainer")
+    public ResponseEntity<ResponseDTO> searchUser(@RequestParam String email) {
+        try {
+            TrainerDTO trainerDTO = trainerService.searchTrainer(email);
+            System.out.println(trainerDTO);
+            if(trainerDTO==null){
+                responseDTO.setCode(VarList.Bad_Gateway);
+                responseDTO.setMessage("No Data");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.BAD_GATEWAY);
+
+            }
+            responseDTO.setCode(VarList.Created);
+            responseDTO.setMessage("Success");
+            responseDTO.setData(trainerDTO);
+            return new ResponseEntity<>(responseDTO, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            responseDTO.setCode(VarList.Internal_Server_Error);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setData(e);
+            return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
