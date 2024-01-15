@@ -96,6 +96,7 @@ public class TrainerService {
 
 
     public TrainerDTO searchTrainer(String email) {
+        System.out.println("ddd");
         if (trainerRepository.existsByEmail(email)) {
             Trainer trainer = trainerRepository.findByEmail(email);
 
