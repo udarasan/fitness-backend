@@ -124,7 +124,6 @@ public class UserService {
 
 
             User existingUser = existingUserOptional.get();
-            modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
 
             modelMapper.map(userDTO, existingUser);
 
