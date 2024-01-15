@@ -87,8 +87,12 @@ public class UserService {
                     if (user.getTrainer() != null) {
                         userDTO.setTrainer_id(user.getTrainer().getTID());
                     }
-                    userDTO.setMeal_plan_id(user.getMealPlan().getMID());
-                    userDTO.setWorkout_id(user.getWorkOutPlan().getWID());
+                    if(user.getMealPlan() != null){
+                        userDTO.setMeal_plan_id(user.getMealPlan().getMID());
+                    }
+                    if(user.getWorkOutPlan() != null){
+                        userDTO.setWorkout_id(user.getWorkOutPlan().getWID());
+                    }
                     return userDTO;
                 })
                 .collect(Collectors.toList());
