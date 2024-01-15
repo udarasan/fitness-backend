@@ -34,4 +34,9 @@ public class User {
     private WorkOutPlan workOutPlan;
 
 
+//    @ManyToOne
+//    @JoinColumn(name = "equipment_id")
+//    private Equipment equipment;
+
+
 }
