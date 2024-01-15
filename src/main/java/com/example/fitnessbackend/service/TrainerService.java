@@ -8,6 +8,8 @@ import com.example.fitnessbackend.entity.User;
 import com.example.fitnessbackend.entity.WorkOutPlan;
 import com.example.fitnessbackend.repo.TrainerRepository;
 import com.example.fitnessbackend.util.VarList;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.modelmapper.convention.MatchingStrategies;
@@ -31,6 +33,8 @@ public class TrainerService {
     private TrainerRepository trainerRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public boolean isValidTrainerCredentials(String username, String password) {
         Trainer trainer = trainerRepository.findByEmailAndPassword(username, password);
@@ -96,56 +100,89 @@ public class TrainerService {
 
 
     public TrainerDTO searchTrainer(String email) {
-        System.out.println("ddd");
+
         if (trainerRepository.existsByEmail(email)) {
-            Trainer trainer = trainerRepository.findByEmail(email);
-
-            // Configure modelMapper to handle the mapping of trainer_id in UserDTO
-            modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-
-            TrainerDTO trainerDTO = modelMapper.map(trainer, TrainerDTO.class);
-            List<UserDTO> userDTOs = modelMapper.map(trainer.getUsers(), new TypeToken<ArrayList<UserDTO>>() {}.getType());
-
-            // Assuming each User has a reference to a MealPlan
-            MealPlan mealPlan; // Initialize mealPlan to null
-            WorkOutPlan workOutPlan;
-            // Find the first user with a non-null MealPlan reference
-            User userWithMealPlan = trainer.getUsers().stream()
-                    .filter(u -> u.getMealPlan() != null)
-
-                    .findFirst()
-                    .orElse(null);
-            User userWithWorkOutPlan = trainer.getUsers().stream()
-                    .filter(u -> u.getWorkOutPlan() != null)
-                    .findFirst()
-                    .orElse(null);
-
-            if (userWithWorkOutPlan != null) {
-                workOutPlan = userWithWorkOutPlan.getWorkOutPlan();
-            } else {
-                workOutPlan = null;
-            }
-
-            if (userWithMealPlan != null) {
-                mealPlan = userWithMealPlan.getMealPlan();
-            } else {
-                mealPlan = null;
-            }
-
-            // Set the trainer_id and meal_plan_id in each UserDTO
-            userDTOs.forEach(userDTO -> {
-                userDTO.setTrainer_id(trainer.getTID());
-
-                userDTO.setMeal_plan_id(mealPlan != null ? mealPlan.getMID() : 0);
-
-                userDTO.setWorkout_id(workOutPlan != null ? workOutPlan.getWID() : 0);
-            });
-
-            trainerDTO.setUsers(userDTOs);
-            return trainerDTO;
+            Trainer trainer=trainerRepository.findByEmail(email);
+            return modelMapper.map(trainer,TrainerDTO.class);
         } else {
-            return null; // Trainer with the specified email not found
+            return null;
         }
+//        System.out.println("ddd");
+//        if (trainerRepository.existsByEmail(email)) {
+//            Trainer trainer = trainerRepository.findByEmail(email);
+//
+//            // Configure modelMapper to handle the mapping of trainer_id in UserDTO
+//            modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+//
+//            TrainerDTO trainerDTO = modelMapper.map(trainer, TrainerDTO.class);
+//            List<UserDTO> userDTOs = modelMapper.map(trainer.getUsers(), new TypeToken<ArrayList<UserDTO>>() {}.getType());
+//
+//            // Assuming each User has a reference to a MealPlan
+//            MealPlan mealPlan; // Initialize mealPlan to null
+//            WorkOutPlan workOutPlan;
+//            // Find the first user with a non-null MealPlan reference
+//            User userWithMealPlan = trainer.getUsers().stream()
+//                    .filter(u -> u.getMealPlan() != null)
+//
+//                    .findFirst()
+//                    .orElse(null);
+//            User userWithWorkOutPlan = trainer.getUsers().stream()
+//                    .filter(u -> u.getWorkOutPlan() != null)
+//                    .findFirst()
+//                    .orElse(null);
+//
+//            if (userWithWorkOutPlan != null) {
+//                workOutPlan = userWithWorkOutPlan.getWorkOutPlan();
+//            } else {
+//                workOutPlan = null;
+//            }
+//
+//            if (userWithMealPlan != null) {
+//                mealPlan = userWithMealPlan.getMealPlan();
+//            } else {
+//                mealPlan = null;
+//            }
+//
+//            // Set the trainer_id and meal_plan_id in each UserDTO
+//            userDTOs.forEach(userDTO -> {
+//                userDTO.setTrainer_id(trainer.getTID());
+//
+//                userDTO.setMeal_plan_id(mealPlan != null ? mealPlan.getMID() : null);
+//
+//                userDTO.setWorkout_id(workOutPlan != null ? workOutPlan.getWID() : null);
+//            });
+//
+//            trainerDTO.setUsers(userDTOs);
+//            return trainerDTO;
+//        } else {
+//            return null; // Trainer with the specified email not found
+//        }
     }
 
+    public List<UserDTO> searchClentWithTrainer(String id) {
+        String hql = "FROM User u WHERE u.trainer.id = :trainerId";
+        List<User> users = entityManager.createQuery(hql, User.class)
+                .setParameter("trainerId", id)
+                .getResultList();
+
+        List<UserDTO> userDTOs = new ArrayList<>();
+        for (User user : users) {
+
+            UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+            userDTO.setTrainer_id(user.getTrainer().getTID());
+            if (user.getMealPlan() != null && user.getMealPlan().getMID()!=0){
+                userDTO.setMeal_plan_id(user.getMealPlan().getMID());
+            }
+
+
+            userDTO.setTrainer_id(user.getTrainer().getTID());
+            if (user.getWorkOutPlan() != null && user.getWorkOutPlan().getWID() != 0) {
+                userDTO.setWorkout_id(user.getWorkOutPlan().getWID());
+            }
+            userDTOs.add(userDTO);
+        }
+
+        return userDTOs;
+
+    }
 }
