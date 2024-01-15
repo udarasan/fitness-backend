@@ -135,10 +135,10 @@ public class TrainerService {
             // Set the trainer_id and meal_plan_id in each UserDTO
             userDTOs.forEach(userDTO -> {
                 userDTO.setTrainer_id(trainer.getTID());
-                assert mealPlan != null;
-                userDTO.setMeal_plan_id( mealPlan.getMID());
-                assert workOutPlan != null;
-                userDTO.setWorkout_id(workOutPlan.getWID());
+
+                userDTO.setMeal_plan_id(mealPlan != null ? mealPlan.getMID() : 0);
+
+                userDTO.setWorkout_id(workOutPlan != null ? workOutPlan.getWID() : 0);
             });
 
             trainerDTO.setUsers(userDTOs);
