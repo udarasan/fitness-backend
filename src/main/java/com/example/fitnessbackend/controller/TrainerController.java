@@ -3,14 +3,19 @@ package com.example.fitnessbackend.controller;
 import com.example.fitnessbackend.dto.ResponseDTO;
 import com.example.fitnessbackend.dto.TrainerDTO;
 import com.example.fitnessbackend.dto.UserDTO;
+import com.example.fitnessbackend.dto.WorkOutPlanDTO;
 import com.example.fitnessbackend.service.TrainerService;
+import com.example.fitnessbackend.service.UserService;
+import com.example.fitnessbackend.service.WorkOutPlanService;
 import com.example.fitnessbackend.util.VarList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @TimeStamp 2024-01-09 07:34
@@ -22,6 +27,10 @@ import java.util.List;
 public class TrainerController {
     @Autowired
     private TrainerService trainerService;
+    @Autowired
+    private WorkOutPlanService workoutService;
+    @Autowired
+    private UserService userService;
     @Autowired
     private ResponseDTO responseDTO;
 
@@ -197,6 +206,42 @@ public class TrainerController {
             responseDTO.setCode(VarList.Internal_Server_Error);
             responseDTO.setMessage(e.getMessage());
             responseDTO.setData(e);
+            return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Transactional
+    @PostMapping(value = "/assignNewWorkout")
+    public ResponseEntity<ResponseDTO> assignNewWorkout(@RequestBody AssignNewWorkoutDTO assignNewWorkoutDTO) {
+        try {
+            WorkOutPlanDTO workOutPlanDTO = assignNewWorkoutDTO.getWorkOutPlanDTO();
+            UserDTO userDTO = assignNewWorkoutDTO.getUserDTO();
+
+            System.out.println("@@@"+workOutPlanDTO);
+            System.out.println("###"+userDTO);
+
+            Map<String, Object> result = workoutService.saveWorkOutPlan(workOutPlanDTO);
+            int res1 = (Integer)result.get("res");
+            int newWorkId = (Integer)result.get("savedId");
+
+            userDTO.setWorkout_id(newWorkId);
+            int res2 = userService.updateUser(userDTO);
+
+            if (res1==201 && res2==201) {
+                responseDTO.setCode(VarList.Created);
+                responseDTO.setMessage("success");
+                responseDTO.setData(userDTO);
+                return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
+            }  else {
+                responseDTO.setCode(VarList.Bad_Request);
+                responseDTO.setMessage("Operation failed");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            responseDTO.setCode(VarList.Internal_Server_Error);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setData(null);
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

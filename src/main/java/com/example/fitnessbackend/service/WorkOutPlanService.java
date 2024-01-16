@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -26,9 +28,14 @@ public class WorkOutPlanService {
     private ModelMapper modelMapper;
 
 
-    public int saveWorkOutPlan(WorkOutPlanDTO workOutPlanDTO) {
-        workOutPlanRepository.save(modelMapper.map(workOutPlanDTO, WorkOutPlan.class));
-        return VarList.Created;
+    public Map<String, Object> saveWorkOutPlan(WorkOutPlanDTO workOutPlanDTO) {
+        WorkOutPlan workOutPlan = workOutPlanRepository.save(modelMapper.map(workOutPlanDTO, WorkOutPlan.class));
+
+        int generatedId = workOutPlan.getWID();
+        Map<String, Object> result = new HashMap<>();
+        result.put("res", VarList.Created);
+        result.put("savedId", generatedId);
+        return result;
     }
 
     public List<WorkOutPlanDTO> getAllWorkOutPlans() {

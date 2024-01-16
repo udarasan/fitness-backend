@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @TimeStamp 2024-01-10 18:08
@@ -30,7 +31,8 @@ public class WorkOutPlanController {
     @PostMapping(value = "/save")
     public ResponseEntity<ResponseDTO> saveWorkOutPlan(@RequestBody WorkOutPlanDTO workOutPlanDTO) {
         try {
-            int res = workOutPlanService.saveWorkOutPlan(workOutPlanDTO);
+            Map<String, Object> result = workOutPlanService.saveWorkOutPlan(workOutPlanDTO);
+            int res = (Integer)result.get("res");
             if (res==201) {
                 responseDTO.setCode(VarList.Created);
                 responseDTO.setMessage("success");
