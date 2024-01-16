@@ -25,4 +25,7 @@ public class WorkOutPlan {
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "workOutPlan")
     private List<User> user;
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "workOutPlan")
+    private List<Progress> progresses;
 }

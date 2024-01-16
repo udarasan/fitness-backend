@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * @TimeStamp 2024-01-08 23:18
  * @ProjectDetails fitness-backend
@@ -33,7 +35,8 @@ public class User {
     @JoinColumn(name = "workout_id")
     private WorkOutPlan workOutPlan;
 
-
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
+    private List<Progress> progresses;
 //    @ManyToOne
 //    @JoinColumn(name = "equipment_id")
 //    private Equipment equipment;
