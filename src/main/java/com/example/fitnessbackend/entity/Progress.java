@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -26,13 +28,16 @@ public class Progress {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "meal_plan_id")
-    private MealPlan mealPlan;
+    @Temporal(TemporalType.DATE)
+    private Date date;
 
-    @ManyToOne
-    @JoinColumn(name = "workout_id")
-    private WorkOutPlan workOutPlan;
+//    @ManyToOne
+//    @JoinColumn(name = "meal_plan_id")
+//    private MealPlan mealPlan;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "workout_id")
+//    private WorkOutPlan workOutPlan;
 
 
 

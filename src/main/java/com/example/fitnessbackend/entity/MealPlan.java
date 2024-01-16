@@ -28,7 +28,7 @@ public class MealPlan {
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "mealPlan")
     private List<User> user;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "mealPlan")
-    private List<Progress> progresses;
+//    @OneToMany(fetch = FetchType.EAGER,mappedBy = "mealPlan")
+//    private List<Progress> progresses;
 
 }
