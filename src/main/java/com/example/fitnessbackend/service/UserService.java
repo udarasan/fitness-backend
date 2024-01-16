@@ -100,8 +100,26 @@ public class UserService {
 
     public UserDTO searchUser(String email) {
         if (userRepository.existsByEmail(email)) {
-            User user=userRepository.findByEmail(email);
-            return modelMapper.map(user,UserDTO.class);
+            User user = userRepository.findByEmail(email);
+
+            if (user != null) {
+                UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+                if (user.getTrainer() != null) {
+                    userDTO.setTrainer_id(user.getTrainer().getTID());
+                }
+
+                if (user.getMealPlan() != null) {
+                    userDTO.setMeal_plan_id(user.getMealPlan().getMID());
+                }
+
+                if (user.getWorkOutPlan() != null) {
+                    userDTO.setWorkout_id(user.getWorkOutPlan().getWID());
+                }
+
+                return userDTO;
+            } else {
+                return null;
+            }
         } else {
             return null;
         }
