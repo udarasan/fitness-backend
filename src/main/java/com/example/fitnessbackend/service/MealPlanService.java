@@ -71,6 +71,11 @@ public class MealPlanService {
 
     }
 
+    public int getNumberOfMeals() {
+        int count = (int) mealPlanRepository.count();
+        return count;
+    }
+
 //    public int deleteMealPlan(MealPlanDTO mealPlanDTO) {
 //
 //        MealPlan existingEntity = mealPlanRepository.findById(mealPlanDTO.getMid())
