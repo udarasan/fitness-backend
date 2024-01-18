@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @TimeStamp 2024-01-10 18:10
@@ -25,9 +27,14 @@ public class MealPlanService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public int saveMealPlan(MealPlanDTO mealPlanDTO) {
-        mealPlanRepository.save(modelMapper.map(mealPlanDTO, MealPlan.class));
-        return VarList.Created;
+    public Map<String, Object> saveMealPlan(MealPlanDTO mealPlanDTO) {
+      MealPlan mealPlan=  mealPlanRepository.save(modelMapper.map(mealPlanDTO, MealPlan.class));
+
+        int generatedId = mealPlan.getMID();
+        Map<String, Object> result = new HashMap<>();
+        result.put("res", VarList.Created);
+        result.put("savedId", generatedId);
+        return result;
     }
     public List<MealPlanDTO> getAllMealPlans() {
         List<MealPlan> mealPlans=mealPlanRepository.findAll();
