@@ -1,9 +1,7 @@
 package com.example.fitnessbackend.controller;
 
-import com.example.fitnessbackend.dto.ResponseDTO;
-import com.example.fitnessbackend.dto.TrainerDTO;
-import com.example.fitnessbackend.dto.UserDTO;
-import com.example.fitnessbackend.dto.WorkOutPlanDTO;
+import com.example.fitnessbackend.dto.*;
+import com.example.fitnessbackend.service.MealPlanService;
 import com.example.fitnessbackend.service.TrainerService;
 import com.example.fitnessbackend.service.UserService;
 import com.example.fitnessbackend.service.WorkOutPlanService;
@@ -31,6 +29,8 @@ public class TrainerController {
     private WorkOutPlanService workoutService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private MealPlanService mealPlanService;
     @Autowired
     private ResponseDTO responseDTO;
 
@@ -245,4 +245,43 @@ public class TrainerController {
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @Transactional
+    @PostMapping(value = "/assignNewMealPlan")
+    public ResponseEntity<ResponseDTO> assignNewMealPlan(@RequestBody AssignNewMealPlanDTO assignNewMealPlanDTO) {
+        try {
+            MealPlanDTO mealPlanDTO = assignNewMealPlanDTO.getMealPlanDTO();
+            UserDTO userDTO = assignNewMealPlanDTO.getUserDTO();
+
+            System.out.println("@@@"+mealPlanDTO);
+            System.out.println("###"+userDTO);
+
+            Map<String, Object> result = mealPlanService.saveMealPlan(mealPlanDTO);
+            int res1 = (Integer)result.get("res");
+            int newMealPlanId = (Integer)result.get("savedId");
+
+            userDTO.setMeal_plan_id(newMealPlanId);
+            int res2 = userService.updateUser(userDTO);
+
+            if (res1==201 && res2==201) {
+                responseDTO.setCode(VarList.Created);
+                responseDTO.setMessage("success");
+                responseDTO.setData(userDTO);
+                return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
+            }  else {
+                responseDTO.setCode(VarList.Bad_Request);
+                responseDTO.setMessage("Operation failed");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            responseDTO.setCode(VarList.Internal_Server_Error);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setData(null);
+            return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 }

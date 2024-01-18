@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @TimeStamp 2024-01-10 18:08
@@ -30,7 +31,8 @@ public class MealPlanController {
     @PostMapping(value = "/save")
     public ResponseEntity<ResponseDTO> saveMealPlan(@RequestBody MealPlanDTO mealPlanDTO) {
         try {
-            int res = mealPlanService.saveMealPlan(mealPlanDTO);
+            Map<String, Object> result = mealPlanService.saveMealPlan(mealPlanDTO);
+            int res = (Integer)result.get("res");
             if (res==201) {
                 responseDTO.setCode(VarList.Created);
                 responseDTO.setMessage("success");
