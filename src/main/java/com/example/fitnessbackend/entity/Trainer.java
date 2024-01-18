@@ -19,7 +19,7 @@ public class Trainer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int tID;
-
+    private String name;
     private String email;
     private String password;
     private String category;

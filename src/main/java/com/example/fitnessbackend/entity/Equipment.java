@@ -16,6 +16,7 @@ public class Equipment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int eid;
     private String equipmentName;
+    @Column(columnDefinition = "TEXT")
     private String equipmentDetail;
     @Temporal(TemporalType.DATE)
     private Date purchaseDate;

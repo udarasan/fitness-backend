@@ -18,7 +18,7 @@ import java.util.List;
 @Data
 public class TrainerDTO {
     private int tID;
-
+    private String name;
     private String email;
     private String password;
     private String category;
