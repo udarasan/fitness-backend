@@ -39,6 +39,9 @@ public class User {
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
     private List<Progress> progresses;
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
+    private List<Chat> chat;
 //    @ManyToOne
 //    @JoinColumn(name = "equipment_id")
 //    private Equipment equipment;

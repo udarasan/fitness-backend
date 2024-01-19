@@ -27,4 +27,7 @@ public class Trainer {
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "trainer")
     private List<User> users;
 
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "trainer")
+    private List<Chat> chat;
+
 }
