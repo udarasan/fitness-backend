@@ -1,6 +1,7 @@
 package com.example.fitnessbackend.service;
 
 import com.example.fitnessbackend.dto.UserDTO;
+import com.example.fitnessbackend.dto.WorkOutPlanDTO;
 import com.example.fitnessbackend.entity.MealPlan;
 import com.example.fitnessbackend.entity.Trainer;
 import com.example.fitnessbackend.entity.User;
@@ -170,6 +171,16 @@ public class UserService {
     public int getNumberOfMembers() {
         int count = (int) userRepository.count();
         return count;
+    }
+
+    public List<UserDTO> searchUsersByName(String partialName) {
+        List<User> plans = userRepository.findByNameStartingWith(partialName);
+
+        List<UserDTO> userDTOS = plans.stream()
+                .map(name -> modelMapper.map(name, UserDTO.class))
+                .collect(Collectors.toList());
+
+        return userDTOS;
     }
 
 //    public String generateNextUserId() {
