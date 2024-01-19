@@ -22,6 +22,8 @@ public class User {
     private String name;
     private String email;
     private String password;
+    private  int age;
+    private String gender;
 
     @ManyToOne
     @JoinColumn(name = "trainer_id")
