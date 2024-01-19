@@ -1,4 +1,4 @@
-package com.example.fitnessbackend.controller;
+package com.example.fitnessbackend.dto;
 
 import com.example.fitnessbackend.dto.UserDTO;
 import com.example.fitnessbackend.dto.WorkOutPlanDTO;

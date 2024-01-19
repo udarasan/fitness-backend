@@ -167,6 +167,11 @@ public class UserService {
         }
     }
 
+    public int getNumberOfMembers() {
+        int count = (int) userRepository.count();
+        return count;
+    }
+
 //    public String generateNextUserId() {
 ////        Optional<User> latestUser = userRepository.findTopByOrderByUIDDesc();
 ////        return latestUser.map(User::getUID).orElse("0");

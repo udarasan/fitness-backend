@@ -185,4 +185,9 @@ public class TrainerService {
         return userDTOs;
 
     }
+
+    public int getNumberOfTrainers() {
+        int count = (int) trainerRepository.count();
+        return count;
+    }
 }

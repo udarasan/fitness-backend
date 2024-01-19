@@ -71,4 +71,9 @@ public class WorkOutPlanService {
             return VarList.Created;
         }
     }
+
+    public int getNumberOfWorkouts() {
+        int count = (int) workOutPlanRepository.count();
+        return count;
+    }
 }
