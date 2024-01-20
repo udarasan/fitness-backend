@@ -52,10 +52,10 @@ public class ChatController {
         }
     }
 
-    @GetMapping(value = "/getAllChats/{id}")
-    public ResponseEntity<ResponseDTO> getAllChats(@PathVariable String id) {
+    @GetMapping(value = "/getAllChats/{tid}/{uid}")
+    public ResponseEntity<ResponseDTO> getAllChats(@PathVariable String tid, @PathVariable String uid) {
         try {
-            List<ChatDTO> chatDTOS = chatService.getAllChats(id);
+            List<ChatDTO> chatDTOS = chatService.getAllChats(tid,uid);
             System.out.println(chatDTOS);
             if(chatDTOS==null){
                 responseDTO.setCode(VarList.Bad_Gateway);

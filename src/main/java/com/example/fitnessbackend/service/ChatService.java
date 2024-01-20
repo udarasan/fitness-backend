@@ -57,10 +57,11 @@ public class ChatService {
         }
     }
 
-    public List<ChatDTO> getAllChats(String id) {
-        String hql = "FROM Chat c WHERE c.user.id = :userId";
+    public List<ChatDTO> getAllChats(String trainerId, String userId) {
+        String hql = "FROM Chat c WHERE c.trainer.id = :trainerId AND c.user.id = :userId";
         List<Chat> chats = entityManager.createQuery(hql, Chat.class)
-                .setParameter("userId", id)
+                .setParameter("trainerId", trainerId)
+                .setParameter("userId", userId)
                 .getResultList();
 
         List<ChatDTO> chatDTOS = new ArrayList<>();
