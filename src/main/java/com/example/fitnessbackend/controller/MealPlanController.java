@@ -3,6 +3,7 @@ package com.example.fitnessbackend.controller;
 import com.example.fitnessbackend.dto.MealPlanDTO;
 import com.example.fitnessbackend.dto.ResponseDTO;
 import com.example.fitnessbackend.dto.TrainerDTO;
+import com.example.fitnessbackend.dto.UserDTO;
 import com.example.fitnessbackend.service.MealPlanService;
 import com.example.fitnessbackend.util.VarList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,6 +143,33 @@ public class MealPlanController {
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @GetMapping("/searchMealByName")
+    public ResponseEntity<ResponseDTO> searchMealByName(@RequestParam String partialName) {
+        System.out.println(partialName);
+        try {
+            List<MealPlanDTO> mealPlanDTOS = mealPlanService.searchMealByName(partialName);
+
+            if (mealPlanDTOS.isEmpty()) {
+                responseDTO.setCode(VarList.Bad_Gateway);
+                responseDTO.setMessage("No Data");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.BAD_GATEWAY);
+            }
+
+            responseDTO.setCode(VarList.Created);
+            responseDTO.setMessage("Success");
+            responseDTO.setData(mealPlanDTOS);
+            return new ResponseEntity<>(responseDTO, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            responseDTO.setCode(VarList.Internal_Server_Error);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setData(e);
+            return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 
 

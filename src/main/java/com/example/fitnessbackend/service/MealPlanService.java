@@ -1,8 +1,10 @@
 package com.example.fitnessbackend.service;
 
 import com.example.fitnessbackend.dto.MealPlanDTO;
+import com.example.fitnessbackend.dto.UserDTO;
 import com.example.fitnessbackend.entity.MealPlan;
 import com.example.fitnessbackend.entity.Trainer;
+import com.example.fitnessbackend.entity.User;
 import com.example.fitnessbackend.repo.MealPlanRepository;
 import com.example.fitnessbackend.util.VarList;
 import jakarta.persistence.EntityNotFoundException;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @TimeStamp 2024-01-10 18:10
@@ -74,6 +77,17 @@ public class MealPlanService {
     public int getNumberOfMeals() {
         int count = (int) mealPlanRepository.count();
         return count;
+    }
+
+    public List<MealPlanDTO> searchMealByName(String partialName) {
+        List<MealPlan> plans = mealPlanRepository.findByPlanNameStartingWith(partialName);
+
+        List<MealPlanDTO> mealPlanDTOS = plans.stream()
+                .map(name -> modelMapper.map(name, MealPlanDTO.class))
+                .collect(Collectors.toList());
+
+        return mealPlanDTOS;
+
     }
 
 //    public int deleteMealPlan(MealPlanDTO mealPlanDTO) {
