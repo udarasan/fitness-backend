@@ -190,4 +190,14 @@ public class TrainerService {
         int count = (int) trainerRepository.count();
         return count;
     }
+
+    public List<TrainerDTO> searchTrainerByName(String partialName) {
+        List<Trainer> plans = trainerRepository.findByNameStartingWith(partialName);
+
+        List<TrainerDTO> trainerDTOS = plans.stream()
+                .map(name -> modelMapper.map(name, TrainerDTO.class))
+                .collect(Collectors.toList());
+
+        return trainerDTOS;
+    }
 }

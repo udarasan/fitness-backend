@@ -1,6 +1,7 @@
 package com.example.fitnessbackend.repo;
 
 import com.example.fitnessbackend.entity.Trainer;
+import com.example.fitnessbackend.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +20,6 @@ public interface TrainerRepository  extends JpaRepository<Trainer,Integer> {
     Trainer findByEmail(String email);
 
     List<Trainer> findAllByEmail(String email);
+
+    List<Trainer> findByNameStartingWith(String partialName);
 }
