@@ -2,6 +2,7 @@ package com.example.fitnessbackend.controller;
 
 import com.example.fitnessbackend.dto.ResponseDTO;
 import com.example.fitnessbackend.dto.UserDTO;
+import com.example.fitnessbackend.dto.WorkOutPlanDTO;
 import com.example.fitnessbackend.service.UserService;
 import com.example.fitnessbackend.util.VarList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -177,6 +178,49 @@ public class UserController {
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+
+    @GetMapping("/searchUserByName")
+    public ResponseEntity<ResponseDTO> searchUsersByName(@RequestParam String partialName) {
+        System.out.println(partialName);
+        try {
+            List<UserDTO> userDTOS = userService.searchUsersByName(partialName);
+
+            if (userDTOS.isEmpty()) {
+                responseDTO.setCode(VarList.Bad_Gateway);
+                responseDTO.setMessage("No Data");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.BAD_GATEWAY);
+            }
+
+            responseDTO.setCode(VarList.Created);
+            responseDTO.setMessage("Success");
+            responseDTO.setData(userDTOS);
+            return new ResponseEntity<>(responseDTO, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            responseDTO.setCode(VarList.Internal_Server_Error);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setData(e);
+            return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //    @GetMapping("/generateNextUserId")
