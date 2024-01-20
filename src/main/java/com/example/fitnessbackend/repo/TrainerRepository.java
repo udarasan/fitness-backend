@@ -22,4 +22,5 @@ public interface TrainerRepository  extends JpaRepository<Trainer,Integer> {
     List<Trainer> findAllByEmail(String email);
 
     List<Trainer> findByNameStartingWith(String partialName);
+
 }

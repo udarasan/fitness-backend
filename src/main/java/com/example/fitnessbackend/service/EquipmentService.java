@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EquipmentService {
@@ -56,5 +57,15 @@ public class EquipmentService {
             equipmentRepository.deleteById(Integer.valueOf(id));
             return VarList.Created;
         }
+    }
+
+    public List<EquipmentDTO> searchEquipmentByName(String partialName) {
+        List<Equipment> plans = equipmentRepository.findByequipmentNameStartingWith(partialName);
+
+        List<EquipmentDTO> equipmentDTOS = plans.stream()
+                .map(equipmentName -> modelMapper.map(equipmentName, EquipmentDTO.class))
+                .collect(Collectors.toList());
+
+        return equipmentDTOS;
     }
 }
