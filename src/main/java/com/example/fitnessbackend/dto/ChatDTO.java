@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Time;
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -15,4 +18,6 @@ public class ChatDTO {
     private boolean userSent;
     private int user_id;
     private int trainer_id;
+    private Date date;
+    private Time time;
 }

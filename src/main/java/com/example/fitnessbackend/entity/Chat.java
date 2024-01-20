@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Time;
+import java.util.Date;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -17,6 +20,14 @@ public class Chat {
     private int chatId;
     @Column(columnDefinition = "TEXT")
     private String message;
+
+    @Temporal(TemporalType.DATE)
+    private Date date;
+
+    @Temporal(TemporalType.TIME)
+    private Time time;
+
+
     @Column(name = "user_sent")
     private boolean userSent;
     @ManyToOne
