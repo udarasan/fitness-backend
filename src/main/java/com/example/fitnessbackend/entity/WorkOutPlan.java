@@ -20,6 +20,7 @@ public class WorkOutPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int wID;
     private String planName;
+    @Column(columnDefinition = "TEXT")
     private String planDetails;
     private String burnsCalorieCount;
 
