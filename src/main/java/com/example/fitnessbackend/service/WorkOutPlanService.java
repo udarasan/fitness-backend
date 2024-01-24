@@ -1,5 +1,6 @@
 package com.example.fitnessbackend.service;
 
+import com.example.fitnessbackend.dto.SavedIdDTO;
 import com.example.fitnessbackend.dto.WorkOutPlanDTO;
 import com.example.fitnessbackend.entity.Trainer;
 import com.example.fitnessbackend.entity.WorkOutPlan;
@@ -28,13 +29,14 @@ public class WorkOutPlanService {
     private ModelMapper modelMapper;
 
 
-    public Map<String, Object> saveWorkOutPlan(WorkOutPlanDTO workOutPlanDTO) {
+    public SavedIdDTO saveWorkOutPlan(WorkOutPlanDTO workOutPlanDTO) {
         WorkOutPlan workOutPlan = workOutPlanRepository.save(modelMapper.map(workOutPlanDTO, WorkOutPlan.class));
 
         int generatedId = workOutPlan.getWID();
-        Map<String, Object> result = new HashMap<>();
-        result.put("res", VarList.Created);
-        result.put("savedId", generatedId);
+//        Map<String, Object> result = new HashMap<>();
+//        result.put("res", VarList.Created);
+//        result.put("savedId", generatedId);
+        SavedIdDTO result = new SavedIdDTO(VarList.Created, generatedId);
         return result;
     }
 

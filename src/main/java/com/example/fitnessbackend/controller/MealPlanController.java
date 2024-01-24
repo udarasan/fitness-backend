@@ -1,14 +1,13 @@
 package com.example.fitnessbackend.controller;
 
-import com.example.fitnessbackend.dto.MealPlanDTO;
-import com.example.fitnessbackend.dto.ResponseDTO;
-import com.example.fitnessbackend.dto.TrainerDTO;
-import com.example.fitnessbackend.dto.UserDTO;
+import com.example.fitnessbackend.dto.*;
 import com.example.fitnessbackend.service.MealPlanService;
+import com.example.fitnessbackend.service.UserService;
 import com.example.fitnessbackend.util.VarList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,11 +28,14 @@ public class MealPlanController {
     @Autowired
     private MealPlanService mealPlanService;
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping(value = "/save")
     public ResponseEntity<ResponseDTO> saveMealPlan(@RequestBody MealPlanDTO mealPlanDTO) {
         try {
-            Map<String, Object> result = mealPlanService.saveMealPlan(mealPlanDTO);
-            int res = (Integer)result.get("res");
+            SavedIdDTO result = mealPlanService.saveMealPlan(mealPlanDTO);
+            int res = result.getRes();
             if (res==201) {
                 responseDTO.setCode(VarList.Created);
                 responseDTO.setMessage("success");
@@ -57,6 +59,7 @@ public class MealPlanController {
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping(value = "/getAllMealPlans")
     public ResponseEntity<ResponseDTO> getAllMealPlans() {
         try {
@@ -79,7 +82,6 @@ public class MealPlanController {
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     @PostMapping(value = "/update")
     public ResponseEntity<ResponseDTO> updateMealPlan(@RequestBody MealPlanDTO mealPlanDTO) {
@@ -111,9 +113,6 @@ public class MealPlanController {
         }
     }
 
-
-
-
     @DeleteMapping (value = "/delete/{id}")
     public ResponseEntity<ResponseDTO> deleteMealPlan(@PathVariable int id) {
         System.out.println("update");
@@ -144,7 +143,6 @@ public class MealPlanController {
         }
     }
 
-
     @GetMapping("/searchMealByName")
     public ResponseEntity<ResponseDTO> searchMealByName(@RequestParam String partialName) {
         System.out.println(partialName);
@@ -170,10 +168,38 @@ public class MealPlanController {
         }
     }
 
+    @Transactional
+    @PostMapping(value = "/assignNewMealPlan")
+    public ResponseEntity<ResponseDTO> assignNewMealPlan(@RequestBody AssignNewMealPlanDTO assignNewMealPlanDTO) {
+        try {
+            MealPlanDTO mealPlanDTO = assignNewMealPlanDTO.getMealPlanDTO();
+            UserDTO userDTO = assignNewMealPlanDTO.getUserDTO();
 
+            SavedIdDTO result = mealPlanService.saveMealPlan(mealPlanDTO);
+            int res1 = result.getRes();
+            int newMealPlanId = result.getGeneratedId();
 
+            userDTO.setMeal_plan_id(newMealPlanId);
+            int res2 = userService.updateUser(userDTO);
 
-
+            if (res1==201 && res2==201) {
+                responseDTO.setCode(VarList.Created);
+                responseDTO.setMessage("success");
+                responseDTO.setData(userDTO);
+                return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
+            }  else {
+                responseDTO.setCode(VarList.Bad_Request);
+                responseDTO.setMessage("Operation failed");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            responseDTO.setCode(VarList.Internal_Server_Error);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setData(null);
+            return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
 
 
