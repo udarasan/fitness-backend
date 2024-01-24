@@ -1,13 +1,13 @@
 package com.example.fitnessbackend.controller;
 
-import com.example.fitnessbackend.dto.ResponseDTO;
-import com.example.fitnessbackend.dto.TrainerDTO;
-import com.example.fitnessbackend.dto.WorkOutPlanDTO;
+import com.example.fitnessbackend.dto.*;
+import com.example.fitnessbackend.service.UserService;
 import com.example.fitnessbackend.service.WorkOutPlanService;
 import com.example.fitnessbackend.util.VarList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,11 +28,14 @@ public class WorkOutPlanController {
     @Autowired
     private WorkOutPlanService workOutPlanService;
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping(value = "/save")
     public ResponseEntity<ResponseDTO> saveWorkOutPlan(@RequestBody WorkOutPlanDTO workOutPlanDTO) {
         try {
-            Map<String, Object> result = workOutPlanService.saveWorkOutPlan(workOutPlanDTO);
-            int res = (Integer)result.get("res");
+            SavedIdDTO result = workOutPlanService.saveWorkOutPlan(workOutPlanDTO);
+            int res = result.getRes();
             if (res==201) {
                 responseDTO.setCode(VarList.Created);
                 responseDTO.setMessage("success");
@@ -154,6 +157,39 @@ public class WorkOutPlanController {
                 responseDTO.setMessage("Error");
                 responseDTO.setData(null);
                 return new ResponseEntity<>(responseDTO, HttpStatus.BAD_GATEWAY);
+            }
+        } catch (Exception e) {
+            responseDTO.setCode(VarList.Internal_Server_Error);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setData(null);
+            return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Transactional
+    @PostMapping(value = "/assignNewWorkout")
+    public ResponseEntity<ResponseDTO> assignNewWorkout(@RequestBody AssignNewWorkoutDTO assignNewWorkoutDTO) {
+        try {
+            WorkOutPlanDTO workOutPlanDTO = assignNewWorkoutDTO.getWorkOutPlanDTO();
+            UserDTO userDTO = assignNewWorkoutDTO.getUserDTO();
+
+            SavedIdDTO result = workOutPlanService.saveWorkOutPlan(workOutPlanDTO);
+            int res1 = result.getRes();
+            int newWorkId = result.getGeneratedId();
+
+            userDTO.setWorkout_id(newWorkId);
+            int res2 = userService.updateUser(userDTO);
+
+            if (res1==201 && res2==201) {
+                responseDTO.setCode(VarList.Created);
+                responseDTO.setMessage("success");
+                responseDTO.setData(userDTO);
+                return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
+            }  else {
+                responseDTO.setCode(VarList.Bad_Request);
+                responseDTO.setMessage("Operation failed");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
             }
         } catch (Exception e) {
             responseDTO.setCode(VarList.Internal_Server_Error);

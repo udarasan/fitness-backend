@@ -1,6 +1,7 @@
 package com.example.fitnessbackend.service;
 
 import com.example.fitnessbackend.dto.MealPlanDTO;
+import com.example.fitnessbackend.dto.SavedIdDTO;
 import com.example.fitnessbackend.dto.UserDTO;
 import com.example.fitnessbackend.entity.MealPlan;
 import com.example.fitnessbackend.entity.Trainer;
@@ -30,13 +31,14 @@ public class MealPlanService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public Map<String, Object> saveMealPlan(MealPlanDTO mealPlanDTO) {
+    public SavedIdDTO saveMealPlan(MealPlanDTO mealPlanDTO) {
       MealPlan mealPlan=  mealPlanRepository.save(modelMapper.map(mealPlanDTO, MealPlan.class));
 
         int generatedId = mealPlan.getMID();
-        Map<String, Object> result = new HashMap<>();
-        result.put("res", VarList.Created);
-        result.put("savedId", generatedId);
+//        Map<String, Object> result = new HashMap<>();
+//        result.put("res", VarList.Created);
+//        result.put("savedId", generatedId);
+        SavedIdDTO result = new SavedIdDTO(VarList.Created, generatedId);
         return result;
     }
     public List<MealPlanDTO> getAllMealPlans() {
@@ -50,7 +52,6 @@ public class MealPlanService {
         MealPlan existingEntity = mealPlanRepository.findById(mealPlanDTO.getMid())
                 .orElseThrow(() -> new EntityNotFoundException("Entity not found with id: " + mealPlanDTO.getMid()));
 
-
         existingEntity.setMID(mealPlanDTO.getMid());
         existingEntity.setPlanName(mealPlanDTO.getPlanName());
         existingEntity.setPlanDetails(mealPlanDTO.getPlanDetails());
@@ -60,8 +61,6 @@ public class MealPlanService {
          mealPlanRepository.save(existingEntity);
 
          return VarList.Created;
-
-
     }
 
     public int deleteMealPlan(Integer id) {
@@ -71,7 +70,6 @@ public class MealPlanService {
 
         mealPlanRepository.deleteById(existingEntity);
         return VarList.Created;
-
     }
 
     public int getNumberOfMeals() {
@@ -87,7 +85,6 @@ public class MealPlanService {
                 .collect(Collectors.toList());
 
         return mealPlanDTOS;
-
     }
 
 //    public int deleteMealPlan(MealPlanDTO mealPlanDTO) {
