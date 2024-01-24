@@ -3,6 +3,7 @@ package com.example.fitnessbackend.service;
 import com.example.fitnessbackend.dto.ProgressDTO;
 import com.example.fitnessbackend.dto.TrainerDTO;
 import com.example.fitnessbackend.dto.UserDTO;
+import com.example.fitnessbackend.entity.Chat;
 import com.example.fitnessbackend.entity.Progress;
 import com.example.fitnessbackend.entity.Trainer;
 import com.example.fitnessbackend.entity.User;
@@ -48,11 +49,12 @@ public class ProgressService {
         }
     }
 
-    public List<ProgressDTO> getAllProgress(String id) {
-        String hql = "FROM Progress p WHERE p.user.id = :userId";
-        List<Progress> progresses = entityManager.createQuery(hql, Progress.class)
-                .setParameter("userId", id)
-                .getResultList();
+    public List<ProgressDTO> getAllProgress(int id) {
+//        String hql = "FROM Progress p WHERE p.user.id = :userId";
+//        List<Progress> progresses = entityManager.createQuery(hql, Progress.class)
+//                .setParameter("userId", id)
+//                .getResultList();
+        List<Progress> progresses = progressRepository.findByProgress(id);
 
         List<ProgressDTO> progressDTOList = new ArrayList<>();
 
