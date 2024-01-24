@@ -53,7 +53,7 @@ public class ProgressController {
 
 
     @GetMapping(value = "/getAllProgress/{id}")
-    public ResponseEntity<ResponseDTO> getAllProgress(@PathVariable String id) {
+    public ResponseEntity<ResponseDTO> getAllProgress(@PathVariable int id) {
         System.out.println(id);
         try {
            List<ProgressDTO> progressDTOS = progressService.getAllProgress(id);
