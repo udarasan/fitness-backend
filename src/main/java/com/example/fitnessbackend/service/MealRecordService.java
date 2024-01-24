@@ -1,6 +1,7 @@
 package com.example.fitnessbackend.service;
 
 import com.example.fitnessbackend.dto.MealRecordDTO;
+import com.example.fitnessbackend.dto.ProgressDTO;
 import com.example.fitnessbackend.entity.MealRecord;
 import com.example.fitnessbackend.entity.Progress;
 import com.example.fitnessbackend.entity.User;
@@ -11,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,6 +35,15 @@ public class MealRecordService {
         return VarList.Created;
     }
 
-    public List<MealRecordDTO> getAllMealRecords(String id) {
+    public List<MealRecordDTO> getAllMealRecords(int id) {
+        List<MealRecord> mealRecords = mealRecordRepository.findByUser(id);
+
+        List<MealRecordDTO> mealRecordDTOList = new ArrayList<>();
+
+        for (MealRecord mealRecord : mealRecords) {
+            MealRecordDTO mealRecordDTO = modelMapper.map(mealRecord, MealRecordDTO.class);
+            mealRecordDTOList.add(mealRecordDTO);
+        }
+        return mealRecordDTOList;
     }
 }

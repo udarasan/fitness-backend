@@ -58,7 +58,7 @@ public class MealRecordController {
     }
 
     @GetMapping(value = "/getAllMealRecords/{id}")
-    public ResponseEntity<ResponseDTO> getAllMealRecords(@PathVariable String id) {
+    public ResponseEntity<ResponseDTO> getAllMealRecords(@PathVariable int id) {
         try {
             List<MealRecordDTO> mealRecordDTOS = mealRecordService.getAllMealRecords(id);
             System.out.println(mealRecordDTOS);
