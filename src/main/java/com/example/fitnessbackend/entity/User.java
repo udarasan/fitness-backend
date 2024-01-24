@@ -42,6 +42,9 @@ public class User {
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
     private List<Chat> chat;
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
+    private List<MealRecord> mealRecords;
 //    @ManyToOne
 //    @JoinColumn(name = "equipment_id")
 //    private Equipment equipment;
