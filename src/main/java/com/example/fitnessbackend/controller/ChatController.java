@@ -53,7 +53,7 @@ public class ChatController {
     }
 
     @GetMapping(value = "/getAllChats/{tid}/{uid}")
-    public ResponseEntity<ResponseDTO> getAllChats(@PathVariable String tid, @PathVariable String uid) {
+    public ResponseEntity<ResponseDTO> getAllChats(@PathVariable int tid, @PathVariable int uid) {
         try {
             List<ChatDTO> chatDTOS = chatService.getAllChats(tid,uid);
             System.out.println(chatDTOS);

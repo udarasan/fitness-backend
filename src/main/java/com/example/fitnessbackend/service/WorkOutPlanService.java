@@ -33,9 +33,6 @@ public class WorkOutPlanService {
         WorkOutPlan workOutPlan = workOutPlanRepository.save(modelMapper.map(workOutPlanDTO, WorkOutPlan.class));
 
         int generatedId = workOutPlan.getWID();
-//        Map<String, Object> result = new HashMap<>();
-//        result.put("res", VarList.Created);
-//        result.put("savedId", generatedId);
         SavedIdDTO result = new SavedIdDTO(VarList.Created, generatedId);
         return result;
     }

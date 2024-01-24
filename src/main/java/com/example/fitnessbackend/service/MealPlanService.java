@@ -35,9 +35,6 @@ public class MealPlanService {
       MealPlan mealPlan=  mealPlanRepository.save(modelMapper.map(mealPlanDTO, MealPlan.class));
 
         int generatedId = mealPlan.getMID();
-//        Map<String, Object> result = new HashMap<>();
-//        result.put("res", VarList.Created);
-//        result.put("savedId", generatedId);
         SavedIdDTO result = new SavedIdDTO(VarList.Created, generatedId);
         return result;
     }
@@ -87,12 +84,5 @@ public class MealPlanService {
         return mealPlanDTOS;
     }
 
-//    public int deleteMealPlan(MealPlanDTO mealPlanDTO) {
-//
-//        MealPlan existingEntity = mealPlanRepository.findById(mealPlanDTO.getMid())
-//                .orElseThrow(() -> new EntityNotFoundException("Entity not found with id: "+mealPlanDTO.getMid() ));
-//
-//        mealPlanRepository.delete(existingEntity);
-//        return VarList.Created;
-//    }
+
 }
