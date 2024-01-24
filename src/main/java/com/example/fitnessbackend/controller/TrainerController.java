@@ -163,7 +163,7 @@ public class TrainerController {
 
 
     @GetMapping("/getOneTrainer/{id}")
-    public ResponseEntity<ResponseDTO> searchClentWithTrainer(@PathVariable String id) {
+    public ResponseEntity<ResponseDTO> searchClentWithTrainer(@PathVariable int id) {
         try {
             List<UserDTO> userDTOS = trainerService.searchClentWithTrainer(id);
             System.out.println(userDTOS);

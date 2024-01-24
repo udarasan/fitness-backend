@@ -7,6 +7,7 @@ import com.example.fitnessbackend.entity.Trainer;
 import com.example.fitnessbackend.entity.User;
 import com.example.fitnessbackend.entity.WorkOutPlan;
 import com.example.fitnessbackend.repo.TrainerRepository;
+import com.example.fitnessbackend.repo.UserRepository;
 import com.example.fitnessbackend.util.VarList;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -31,6 +32,9 @@ import java.util.stream.Collectors;
 public class TrainerService {
     @Autowired
     private TrainerRepository trainerRepository;
+
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private ModelMapper modelMapper;
     @PersistenceContext
@@ -159,34 +163,27 @@ public class TrainerService {
 //        }
     }
 
-    public List<UserDTO> searchClentWithTrainer(String id) {
-//        String hql = "FROM User u WHERE u.trainer.id = :trainerId";
-//        List<User> users = entityManager.createQuery(hql, User.class)
-//                .setParameter("trainerId", id)
-//                .getResultList();
-//
-//        List<UserDTO> userDTOs = new ArrayList<>();
-//        for (User user : users) {
-//
-//            UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-//            userDTO.setTrainer_id(user.getTrainer().getTID());
-//            if (user.getMealPlan() != null && user.getMealPlan().getMID()!=0){
-//                userDTO.setMeal_plan_id(user.getMealPlan().getMID());
-//            }
-//
-//
-//            userDTO.setTrainer_id(user.getTrainer().getTID());
-//            if (user.getWorkOutPlan() != null && user.getWorkOutPlan().getWID() != 0) {
-//                userDTO.setWorkout_id(user.getWorkOutPlan().getWID());
-//            }
-//            userDTOs.add(userDTO);
-//        }
-//
-//        return userDTOs;
+    public List<UserDTO> searchClentWithTrainer(int id) {
+        List<User> users = userRepository.findAllByClient(id);
 
-        List<User> users=trainerRepository.findAllByClient(1);
-        return modelMapper.map(users, new TypeToken<ArrayList<UserDTO>>() {
-        }.getType());
+        List<UserDTO> userDTOs = new ArrayList<>();
+        for (User user : users) {
+
+            UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+            userDTO.setTrainer_id(user.getTrainer().getTID());
+            if (user.getMealPlan() != null && user.getMealPlan().getMID()!=0){
+                userDTO.setMeal_plan_id(user.getMealPlan().getMID());
+            }
+
+
+            userDTO.setTrainer_id(user.getTrainer().getTID());
+            if (user.getWorkOutPlan() != null && user.getWorkOutPlan().getWID() != 0) {
+                userDTO.setWorkout_id(user.getWorkOutPlan().getWID());
+            }
+            userDTOs.add(userDTO);
+        }
+
+        return userDTOs;
 
     }
 

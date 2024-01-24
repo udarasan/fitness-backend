@@ -25,4 +25,9 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 
 
     List<User> findByNameStartingWith(String partialName);
+
+
+    @Query(value = "select * from user where trainer_id =?1",nativeQuery = true)
+
+    List<User> findAllByClient(int id);
 }
