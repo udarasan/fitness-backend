@@ -114,4 +114,32 @@ public class MealRecordController {
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<ResponseDTO> deleteProgress(@PathVariable String id) {
+        try {
+            int res = mealRecordService.deleteMealRecord(id);
+            if (res==201) {
+                responseDTO.setCode(VarList.No_Content);
+                responseDTO.setMessage("success");
+                responseDTO.setData(id);
+                return new ResponseEntity<>(responseDTO, HttpStatus.NO_CONTENT);
+            } else if (res==406) {
+                responseDTO.setCode(VarList.Not_Acceptable);
+                responseDTO.setMessage("Record Not Available ");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.NOT_ACCEPTABLE);
+            } else {
+                responseDTO.setCode(VarList.Bad_Gateway);
+                responseDTO.setMessage("Error");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.BAD_GATEWAY);
+            }
+        } catch (Exception e) {
+            responseDTO.setCode(VarList.Internal_Server_Error);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setData(null);
+            return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

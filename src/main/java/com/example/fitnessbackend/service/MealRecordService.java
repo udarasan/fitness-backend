@@ -61,4 +61,13 @@ public class MealRecordService {
             return VarList.Created;
         }
     }
+
+    public int deleteMealRecord(String id) {
+        if (!mealRecordRepository.existsById(Integer.valueOf(id))) {
+            return VarList.Not_Acceptable;
+        } else {
+            mealRecordRepository.deleteById(Integer.valueOf(id));
+            return VarList.Created;
+        }
+    }
 }
