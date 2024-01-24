@@ -160,29 +160,33 @@ public class TrainerService {
     }
 
     public List<UserDTO> searchClentWithTrainer(String id) {
-        String hql = "FROM User u WHERE u.trainer.id = :trainerId";
-        List<User> users = entityManager.createQuery(hql, User.class)
-                .setParameter("trainerId", id)
-                .getResultList();
+//        String hql = "FROM User u WHERE u.trainer.id = :trainerId";
+//        List<User> users = entityManager.createQuery(hql, User.class)
+//                .setParameter("trainerId", id)
+//                .getResultList();
+//
+//        List<UserDTO> userDTOs = new ArrayList<>();
+//        for (User user : users) {
+//
+//            UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+//            userDTO.setTrainer_id(user.getTrainer().getTID());
+//            if (user.getMealPlan() != null && user.getMealPlan().getMID()!=0){
+//                userDTO.setMeal_plan_id(user.getMealPlan().getMID());
+//            }
+//
+//
+//            userDTO.setTrainer_id(user.getTrainer().getTID());
+//            if (user.getWorkOutPlan() != null && user.getWorkOutPlan().getWID() != 0) {
+//                userDTO.setWorkout_id(user.getWorkOutPlan().getWID());
+//            }
+//            userDTOs.add(userDTO);
+//        }
+//
+//        return userDTOs;
 
-        List<UserDTO> userDTOs = new ArrayList<>();
-        for (User user : users) {
-
-            UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-            userDTO.setTrainer_id(user.getTrainer().getTID());
-            if (user.getMealPlan() != null && user.getMealPlan().getMID()!=0){
-                userDTO.setMeal_plan_id(user.getMealPlan().getMID());
-            }
-
-
-            userDTO.setTrainer_id(user.getTrainer().getTID());
-            if (user.getWorkOutPlan() != null && user.getWorkOutPlan().getWID() != 0) {
-                userDTO.setWorkout_id(user.getWorkOutPlan().getWID());
-            }
-            userDTOs.add(userDTO);
-        }
-
-        return userDTOs;
+        List<User> users=trainerRepository.findAllByClient(1);
+        return modelMapper.map(users, new TypeToken<ArrayList<UserDTO>>() {
+        }.getType());
 
     }
 
