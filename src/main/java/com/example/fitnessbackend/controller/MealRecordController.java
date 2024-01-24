@@ -80,4 +80,38 @@ public class MealRecordController {
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PostMapping(value = "/update")
+    public ResponseEntity<ResponseDTO> updateMealRecord(@RequestBody MealRecordDTO mealRecordDTO) {
+        System.out.println(mealRecordDTO);
+        try {
+            int res = mealRecordService.updateMealRecord(mealRecordDTO);
+            if (res==201) {
+                responseDTO.setCode(VarList.No_Content);
+                responseDTO.setMessage("success");
+                responseDTO.setData(mealRecordDTO);
+                return new ResponseEntity<>(responseDTO, HttpStatus.NO_CONTENT);
+            } else if (res==406) {
+                responseDTO.setCode(VarList.Not_Acceptable);
+                responseDTO.setMessage("Record Not Available");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.NOT_ACCEPTABLE);
+            } else {
+                responseDTO.setCode(VarList.Bad_Gateway);
+                responseDTO.setMessage("Error");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.BAD_GATEWAY);
+            }
+        }catch (DataIntegrityViolationException e) {
+            responseDTO.setCode(VarList.Conflict);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setData(null);
+            return new ResponseEntity<>(responseDTO, HttpStatus.CONFLICT);
+        }catch (Exception e) {
+            responseDTO.setCode(VarList.Internal_Server_Error);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setData(null);
+            return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

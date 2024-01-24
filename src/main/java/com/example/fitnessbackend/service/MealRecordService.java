@@ -46,4 +46,19 @@ public class MealRecordService {
         }
         return mealRecordDTOList;
     }
+
+    public int updateMealRecord(MealRecordDTO mealRecordDTO) {
+        if (!mealRecordRepository.existsById(mealRecordDTO.getMrID())) {
+            return VarList.Not_Acceptable;
+        } else {
+            User user = userRepository.findById(mealRecordDTO.getUserId()).orElse(null);
+
+            MealRecord mealRecord = modelMapper.map(mealRecordDTO, MealRecord.class);
+
+            mealRecord.setUser(user);
+
+            mealRecordRepository.save(mealRecord);
+            return VarList.Created;
+        }
+    }
 }
