@@ -3,6 +3,7 @@ package com.example.fitnessbackend.controller;
 import com.example.fitnessbackend.dto.MealRecordDTO;
 import com.example.fitnessbackend.dto.ProgressDTO;
 import com.example.fitnessbackend.dto.ResponseDTO;
+import com.example.fitnessbackend.dto.WorkOutPlanDTO;
 import com.example.fitnessbackend.entity.MealRecord;
 import com.example.fitnessbackend.service.MealRecordService;
 import com.example.fitnessbackend.service.ProgressService;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -139,6 +141,30 @@ public class MealRecordController {
             responseDTO.setCode(VarList.Internal_Server_Error);
             responseDTO.setMessage(e.getMessage());
             responseDTO.setData(null);
+            return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/recordsByDate")
+    public ResponseEntity<ResponseDTO> searchUsers(@RequestParam String date) {
+        System.out.println(date);
+        try {
+            List<MealRecordDTO> mealRecordDTOS = mealRecordService.searchMealRecords(date);
+
+            if (mealRecordDTOS.isEmpty()) {
+                responseDTO.setCode(VarList.Bad_Gateway);
+                responseDTO.setMessage("No Data");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.BAD_GATEWAY);
+            }
+            responseDTO.setCode(VarList.Created);
+            responseDTO.setMessage("Success");
+            responseDTO.setData(mealRecordDTOS);
+            return new ResponseEntity<>(responseDTO, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            responseDTO.setCode(VarList.Internal_Server_Error);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setData(e);
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
