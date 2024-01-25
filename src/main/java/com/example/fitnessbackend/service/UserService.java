@@ -17,6 +17,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,6 +66,7 @@ public class UserService {
     }
     public boolean isValidUserCredentials(String username, String password) {
         User user = userRepository.findByEmailAndPassword(username, password);
+        System.out.println(user.getPassword());
         return user != null;
     }
 
