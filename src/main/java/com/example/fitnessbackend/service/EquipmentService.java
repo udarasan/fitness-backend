@@ -68,4 +68,9 @@ public class EquipmentService {
 
         return equipmentDTOS;
     }
+
+    public int getNumberOfEquipments() {
+        int count = (int) equipmentRepository.count();
+        return count;
+    }
 }
