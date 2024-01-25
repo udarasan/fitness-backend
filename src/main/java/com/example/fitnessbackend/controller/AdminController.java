@@ -37,6 +37,8 @@ public class AdminController {
     @Autowired
     private MealPlanService mealService;
 
+    @Autowired
+    private EquipmentService equipmentService;
     @PostMapping("/login")
     public ResponseEntity<ResponseDTO> loginAdmin(@RequestBody AdminDTO adminDTO) {
         if (adminService.isValidTrainerCredentials(adminDTO.getEmail(), adminDTO.getPassword())) {
@@ -69,6 +71,23 @@ public class AdminController {
         }
     }
 
+
+    @GetMapping(value = "/getEquipmentCount")
+    public ResponseEntity<ResponseDTO> getNumberOfEquipments() {
+        try {
+            int numberOfEquipments = equipmentService.getNumberOfEquipments();
+
+            responseDTO.setCode(VarList.OK);
+            responseDTO.setMessage("Success");
+            responseDTO.setData(numberOfEquipments);
+            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            responseDTO.setCode(VarList.Internal_Server_Error);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setData(null);
+            return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @GetMapping(value = "/getMemberCount")
     public ResponseEntity<ResponseDTO> getNumberOfMembers() {
         try {
