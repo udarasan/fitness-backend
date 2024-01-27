@@ -47,6 +47,9 @@ public class User {
     private List<MealRecord> mealRecords;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
+    private List<WorkoutRecord> workoutRecords;
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
     private List<FitnessGoal> fitnessGoals;
 //    @ManyToOne
 //    @JoinColumn(name = "equipment_id")
