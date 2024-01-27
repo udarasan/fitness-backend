@@ -12,7 +12,9 @@ public interface FitnessGoalsRepository extends JpaRepository<FitnessGoal,Intege
     @Query(value = "SELECT * FROM fitness_goal WHERE user_id = ?1", nativeQuery = true)
     List<FitnessGoal> findByUser(int id);
 
-    List<FitnessGoal> findByStatus(String status);
+    @Query(value = "SELECT * FROM fitness_goal WHERE status = ?1 AND user_id = ?2", nativeQuery = true)
+    List<FitnessGoal> findByStatusAndUserId(String status, Integer userId);
 
-    List<FitnessGoal> findByGoalNameStartingWith(String partialName);
+    @Query(value = "SELECT * FROM fitness_goal WHERE goal_name LIKE ?1% AND user_id = ?2", nativeQuery = true)
+    List<FitnessGoal> findByGoalNameStartingWith(String partialName, Integer userId);
 }

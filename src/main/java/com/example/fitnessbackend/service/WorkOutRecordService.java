@@ -78,10 +78,10 @@ public class WorkOutRecordService {
         }
     }
 
-    public List<WorkOutRecordDTO> searchWorkOutRecords(String date) throws ParseException { SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public List<WorkOutRecordDTO> searchWorkOutRecords(String date, int id) throws ParseException { SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date formattedDate = dateFormat.parse(date);
 
-        List<WorkoutRecord> plans = workOutRecordRepository.findByDate(formattedDate);
+        List<WorkoutRecord> plans = workOutRecordRepository.findByDate(formattedDate, id);
 
         List<WorkOutRecordDTO> workOutRecordDTOS = plans.stream()
                 .map(record -> modelMapper.map(record, WorkOutRecordDTO.class))

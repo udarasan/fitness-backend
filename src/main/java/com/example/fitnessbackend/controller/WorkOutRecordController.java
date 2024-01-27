@@ -148,10 +148,9 @@ public class WorkOutRecordController {
 
 
     @GetMapping("/recordsByDate")
-    public ResponseEntity<ResponseDTO> searchByDate(@RequestParam String date) {
-        System.out.println(date);
+    public ResponseEntity<ResponseDTO> searchByDate(@RequestParam String date, @RequestParam int id) {
         try {
-            List<WorkOutRecordDTO> workOutRecordDTOS = workOutRecordService.searchWorkOutRecords(date);
+            List<WorkOutRecordDTO> workOutRecordDTOS = workOutRecordService.searchWorkOutRecords(date, id);
 
             if (workOutRecordDTOS.isEmpty()) {
                 responseDTO.setCode(VarList.Bad_Gateway);

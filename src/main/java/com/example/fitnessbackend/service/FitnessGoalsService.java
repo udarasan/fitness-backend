@@ -76,8 +76,8 @@ public class FitnessGoalsService {
         }
     }
 
-    public List<FitnessGoalDTO> searchByStatus(String status) {
-        List<FitnessGoal> goals = fitnessGoalsRepository.findByStatus(status);
+    public List<FitnessGoalDTO> searchByStatus(String status, int id) {
+        List<FitnessGoal> goals = fitnessGoalsRepository.findByStatusAndUserId(status, id);
 
         List<FitnessGoalDTO> fitnessGoalDTOS = goals.stream()
                 .map(goal -> modelMapper.map(goal, FitnessGoalDTO.class))
@@ -86,8 +86,8 @@ public class FitnessGoalsService {
         return fitnessGoalDTOS;
     }
 
-    public List<FitnessGoalDTO> searchByName(String partialName) {
-        List<FitnessGoal> goals = fitnessGoalsRepository.findByGoalNameStartingWith(partialName);
+    public List<FitnessGoalDTO> searchByName(String partialName, int id) {
+        List<FitnessGoal> goals = fitnessGoalsRepository.findByGoalNameStartingWith(partialName,id);
 
         List<FitnessGoalDTO> fitnessGoalDTOS = goals.stream()
                 .map(goal -> modelMapper.map(goal, FitnessGoalDTO.class))

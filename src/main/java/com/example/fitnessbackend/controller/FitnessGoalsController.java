@@ -132,10 +132,10 @@ public class FitnessGoalsController {
     }
 
     @GetMapping("/goalsByStatus")
-    public ResponseEntity<ResponseDTO> searchByStatus(@RequestParam String status) {
-        System.out.println(status);
+    public ResponseEntity<ResponseDTO> searchByStatus(@RequestParam String status, @RequestParam int id) {
+        System.out.println("/////////////////////"+id);
         try {
-            List<FitnessGoalDTO> fitnessGoalDTOS = fitnessGoalsService.searchByStatus(status);
+            List<FitnessGoalDTO> fitnessGoalDTOS = fitnessGoalsService.searchByStatus(status, id);
 
             if (fitnessGoalDTOS.isEmpty()) {
                 responseDTO.setCode(VarList.Bad_Gateway);
@@ -156,10 +156,9 @@ public class FitnessGoalsController {
     }
 
     @GetMapping("/goalsByName")
-    public ResponseEntity<ResponseDTO> searchUsers(@RequestParam String partialName) {
-        System.out.println(partialName);
+    public ResponseEntity<ResponseDTO> searchUsers(@RequestParam String partialName, @RequestParam int id) {
         try {
-            List<FitnessGoalDTO> fitnessGoalDTOS = fitnessGoalsService.searchByName(partialName);
+            List<FitnessGoalDTO> fitnessGoalDTOS = fitnessGoalsService.searchByName(partialName,id);
 
             if (fitnessGoalDTOS.isEmpty()) {
                 responseDTO.setCode(VarList.Bad_Gateway);

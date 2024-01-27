@@ -146,10 +146,9 @@ public class MealRecordController {
     }
 
     @GetMapping("/recordsByDate")
-    public ResponseEntity<ResponseDTO> searchByDate(@RequestParam String date) {
-        System.out.println(date);
+    public ResponseEntity<ResponseDTO> searchByDate(@RequestParam String date, @RequestParam int id) {
         try {
-            List<MealRecordDTO> mealRecordDTOS = mealRecordService.searchMealRecords(date);
+            List<MealRecordDTO> mealRecordDTOS = mealRecordService.searchMealRecords(date,id);
 
             if (mealRecordDTOS.isEmpty()) {
                 responseDTO.setCode(VarList.Bad_Gateway);

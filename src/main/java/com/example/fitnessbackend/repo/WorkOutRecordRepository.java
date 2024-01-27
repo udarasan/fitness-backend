@@ -12,7 +12,7 @@ public interface WorkOutRecordRepository extends JpaRepository<WorkoutRecord,Int
     @Query(value = "SELECT * FROM workout_record WHERE user_id = ?1", nativeQuery = true)
     List<WorkoutRecord> findByUser(int id);
 
-
-    List<WorkoutRecord> findByDate(Date formattedDate);
+    @Query(value = "SELECT * FROM workout_record WHERE date = ?1 AND user_id = ?2", nativeQuery = true)
+    List<WorkoutRecord> findByDate(Date formattedDate, int id);
 
 }

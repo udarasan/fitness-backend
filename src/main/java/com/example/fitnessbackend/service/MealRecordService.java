@@ -78,11 +78,11 @@ public class MealRecordService {
         }
     }
 
-    public List<MealRecordDTO> searchMealRecords(String date) throws ParseException {
+    public List<MealRecordDTO> searchMealRecords(String date, int id) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date formattedDate = dateFormat.parse(date);
 
-        List<MealRecord> plans = mealRecordRepository.findByDate(formattedDate);
+        List<MealRecord> plans = mealRecordRepository.findByDate(formattedDate, id);
 
         List<MealRecordDTO> mealRecordDTOList = plans.stream()
                 .map(record -> modelMapper.map(record, MealRecordDTO.class))

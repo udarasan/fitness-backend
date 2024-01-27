@@ -13,5 +13,6 @@ public interface MealRecordRepository extends JpaRepository<MealRecord,Integer> 
     @Query(value = "SELECT * FROM meal_record WHERE user_id = ?1", nativeQuery = true)
     List<MealRecord> findByUser(int id);
 
-    List<MealRecord> findByDate(Date date);
+    @Query(value = "SELECT * FROM meal_record WHERE date = ?1 AND user_id = ?2", nativeQuery = true)
+    List<MealRecord> findByDate(Date date, int id);
 }
