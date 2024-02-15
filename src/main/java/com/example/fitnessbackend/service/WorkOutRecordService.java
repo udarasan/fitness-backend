@@ -89,5 +89,17 @@ public class WorkOutRecordService {
 
         return workOutRecordDTOS;
     }
-    }
+
+//    public List<WorkOutRecordDTO> searchWorkOutRecordsByMonth(String month, int id) {
+//        List<WorkoutRecord> workoutRecords = workOutRecordRepository.findByMonth(month, id);
+//
+//        List<WorkOutRecordDTO> workOutRecordDTOS = new ArrayList<>();
+//
+//        for (WorkoutRecord wr : workoutRecords) {
+//            WorkOutRecordDTO workOutRecordDTO = modelMapper.map(wr, WorkOutRecordDTO.class);
+//            workOutRecordDTOS.add(workOutRecordDTO);
+//        }
+//        return workOutRecordDTOS;
+//    }
+}
 

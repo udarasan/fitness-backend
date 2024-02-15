@@ -170,5 +170,31 @@ public class WorkOutRecordController {
         }
     }
 
+//    @GetMapping(value = "/searchWorkoutRecordsByMonth")
+//    public ResponseEntity<ResponseDTO> searchWorkoutRecordsByMonth(@RequestParam String month, @RequestParam int id) {
+//        System.out.println(month);
+//
+//        try {
+//            List<WorkOutRecordDTO> workOutRecordDTOS = workOutRecordService.searchWorkOutRecordsByMonth(month, id);
+//
+//            if (workOutRecordDTOS.isEmpty()) {
+//                responseDTO.setCode(VarList.Bad_Gateway);
+//                responseDTO.setMessage("No Data");
+//                responseDTO.setData(null);
+//                return new ResponseEntity<>(responseDTO, HttpStatus.BAD_GATEWAY);
+//            }
+//
+//            responseDTO.setCode(VarList.Created);
+//            responseDTO.setMessage("Success");
+//            responseDTO.setData(workOutRecordDTOS);
+//            return new ResponseEntity<>(responseDTO, HttpStatus.ACCEPTED);
+//        } catch (Exception e) {
+//            responseDTO.setCode(VarList.Internal_Server_Error);
+//            responseDTO.setMessage(e.getMessage());
+//            responseDTO.setData(e);
+//            return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
 
 }

@@ -15,6 +15,5 @@ public interface EquipmentRepository extends JpaRepository<Equipment,Integer> {
 
 
   /*  @Query(value = "select * from equipment where MONTH(purchase_date) =?1",nativeQuery = true)
-
     List<Equipment> findByMonth(String month);*/
 }
