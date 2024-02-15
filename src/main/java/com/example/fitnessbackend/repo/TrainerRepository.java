@@ -24,6 +24,7 @@ public interface TrainerRepository  extends JpaRepository<Trainer,Integer> {
 
     List<Trainer> findByNameStartingWith(String partialName);
 
-
-
+//    @Query(value = "select * from trainer where category =?1",nativeQuery = true)
+//
+//    List<Trainer> findByTrainerWithCategory(String category);
 }

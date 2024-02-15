@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,4 +74,16 @@ public class EquipmentService {
         int count = (int) equipmentRepository.count();
         return count;
     }
+
+/*    public List<EquipmentDTO> searchEquipmentByMonth(String month) {
+        List<Equipment> equipments = equipmentRepository.findByMonth(month);
+
+        List<EquipmentDTO> equipmentDTOS = new ArrayList<>();
+
+        for (Equipment equipment : equipments) {
+            EquipmentDTO equipmentDTO = modelMapper.map(equipment, EquipmentDTO.class);
+            equipmentDTOS.add(equipmentDTO);
+        }
+        return equipmentDTOS;
+    }*/
 }

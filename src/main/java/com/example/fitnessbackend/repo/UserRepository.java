@@ -30,4 +30,8 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Query(value = "select * from user where trainer_id =?1",nativeQuery = true)
 
     List<User> findAllByClient(int id);
+
+//    @Query(value = "select * from user where age =?1",nativeQuery = true)
+//
+//    List<User> findByAge(String age);
 }

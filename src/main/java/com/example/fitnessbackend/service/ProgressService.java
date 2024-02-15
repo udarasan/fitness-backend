@@ -94,4 +94,17 @@ public class ProgressService {
         }
 
     }
+
+ /*   public List<ProgressDTO> searchProgressByMonth(String month) {
+
+        List<Progress> progresses = progressRepository.findByMonth(month);
+
+        List<ProgressDTO> equipmentDTOS = new ArrayList<>();
+
+        for (Progress progress : progresses) {
+            ProgressDTO progressDTO = modelMapper.map(progress, ProgressDTO.class);
+            equipmentDTOS.add(progressDTO);
+        }
+        return equipmentDTOS;
+    }*/
 }

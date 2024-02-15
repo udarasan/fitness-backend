@@ -32,12 +32,12 @@ public class UserController {
         try {
             System.out.println(userDTO);
             int res = userService.saveUser(userDTO);
-            if (res==201) {
+            if (res == 201) {
                 responseDTO.setCode(VarList.Created);
                 responseDTO.setMessage("success");
                 responseDTO.setData(userDTO);
                 return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
-            } else if (res==406) {
+            } else if (res == 406) {
                 responseDTO.setCode(VarList.Not_Acceptable);
                 responseDTO.setMessage("Email Already Use");
                 responseDTO.setData(null);
@@ -55,7 +55,6 @@ public class UserController {
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
 
     @PostMapping("/login")
@@ -79,12 +78,12 @@ public class UserController {
         System.out.println(userDTO);
         try {
             int res = userService.updateUser(userDTO);
-            if (res==201) {
+            if (res == 201) {
                 responseDTO.setCode(VarList.Created);
                 responseDTO.setMessage("success");
                 responseDTO.setData(userDTO);
                 return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
-            } else if (res==406) {
+            } else if (res == 406) {
                 responseDTO.setCode(VarList.Not_Acceptable);
                 responseDTO.setMessage("Email Not Available ");
                 responseDTO.setData(null);
@@ -102,11 +101,12 @@ public class UserController {
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/getOneUser")
     public ResponseEntity<ResponseDTO> searchUser(@RequestParam String email) {
         try {
             UserDTO userDTO = userService.searchUser(email);
-            if(userDTO==null){
+            if (userDTO == null) {
                 responseDTO.setCode(VarList.Bad_Gateway);
                 responseDTO.setMessage("No Data");
                 responseDTO.setData(null);
@@ -124,12 +124,13 @@ public class UserController {
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping(value = "/getAllUsers")
     public ResponseEntity<ResponseDTO> getAllUsers() {
         try {
             List<UserDTO> userDTO = userService.getAllUsers();
             System.out.println(userDTO);
-            if(userDTO==null){
+            if (userDTO == null) {
                 responseDTO.setCode(VarList.Bad_Gateway);
                 responseDTO.setMessage("No Data");
                 responseDTO.setData(null);
@@ -155,12 +156,12 @@ public class UserController {
         System.out.println(id);
         try {
             int res = userService.deleteUser(id);
-            if (res==201) {
+            if (res == 201) {
                 responseDTO.setCode(VarList.No_Content);
                 responseDTO.setMessage("success");
                 responseDTO.setData(id);
                 return new ResponseEntity<>(responseDTO, HttpStatus.NO_CONTENT);
-            } else if (res==406) {
+            } else if (res == 406) {
                 responseDTO.setCode(VarList.Not_Acceptable);
                 responseDTO.setMessage("Email Not Available ");
                 responseDTO.setData(null);
@@ -178,7 +179,6 @@ public class UserController {
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
 
     @GetMapping("/searchUserByName")
@@ -207,20 +207,30 @@ public class UserController {
     }
 
 
+/*    @GetMapping("/searchUserByAge")
+    public ResponseEntity<ResponseDTO> searchUsersByAge(@RequestParam String age) {
 
+        try {
+            List<UserDTO> userDTOS = userService.searchUsersByAge(age);
 
+            if (userDTOS.isEmpty()) {
+                responseDTO.setCode(VarList.Bad_Gateway);
+                responseDTO.setMessage("No Data");
+                responseDTO.setData(null);
+                return new ResponseEntity<>(responseDTO, HttpStatus.BAD_GATEWAY);
+            }
 
-
-
-
-
-
-
-
-
-
-
-
+            responseDTO.setCode(VarList.Created);
+            responseDTO.setMessage("Success");
+            responseDTO.setData(userDTOS);
+            return new ResponseEntity<>(responseDTO, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            responseDTO.setCode(VarList.Internal_Server_Error);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setData(e);
+            return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }*/
 
 
 //    @GetMapping("/generateNextUserId")

@@ -2,10 +2,8 @@ package com.example.fitnessbackend.service;
 
 import com.example.fitnessbackend.dto.TrainerDTO;
 import com.example.fitnessbackend.dto.UserDTO;
-import com.example.fitnessbackend.entity.MealPlan;
-import com.example.fitnessbackend.entity.Trainer;
-import com.example.fitnessbackend.entity.User;
-import com.example.fitnessbackend.entity.WorkOutPlan;
+import com.example.fitnessbackend.dto.WorkOutRecordDTO;
+import com.example.fitnessbackend.entity.*;
 import com.example.fitnessbackend.repo.TrainerRepository;
 import com.example.fitnessbackend.repo.UserRepository;
 import com.example.fitnessbackend.util.VarList;
@@ -201,4 +199,16 @@ public class TrainerService {
 
         return trainerDTOS;
     }
+
+ /*   public List<TrainerDTO> searchTrainerWithCategory(String category) {
+        List<Trainer> trainer=trainerRepository.findByTrainerWithCategory(category);
+
+        List<TrainerDTO> trainerDTOS = new ArrayList<>();
+
+        for (Trainer trainer1 : trainer) {
+            TrainerDTO trainerDTO = modelMapper.map(trainer1, TrainerDTO.class);
+            trainerDTOS.add(trainerDTO);
+        }
+        return trainerDTOS;
+    }*/
 }

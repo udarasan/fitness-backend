@@ -9,9 +9,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProgressRepository extends JpaRepository<Progress,Integer> {
+public interface ProgressRepository extends JpaRepository<Progress, Integer> {
 
     @Query(value = "SELECT * FROM progress WHERE user_id = ?1", nativeQuery = true)
-    List<Progress> findByProgress( int userId);
+    List<Progress> findByProgress(int userId);
 
+   /* @Query(value = "select * from progress where MONTH(date) =?1", nativeQuery = true)
+    List<Progress> findByMonth(String month);*/
 }

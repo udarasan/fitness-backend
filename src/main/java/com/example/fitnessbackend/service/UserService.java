@@ -46,7 +46,6 @@ public class UserService {
     private ModelMapper modelMapper;
 
 
-
     public int saveUser(UserDTO userDTO) {
         if (userRepository.existsByEmail(userDTO.getEmail())) {
             return VarList.Not_Acceptable;
@@ -64,12 +63,12 @@ public class UserService {
             return VarList.Created;
         }
     }
+
     public boolean isValidUserCredentials(String username, String password) {
         User user = userRepository.findByEmailAndPassword(username, password);
-        System.out.println(user.getPassword());
+//        System.out.println(user.getPassword());
         return user != null;
     }
-
 
 
     public List<UserDTO> getAllUsers() {
@@ -83,17 +82,18 @@ public class UserService {
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.STRICT); // Adjust matching strategy as needed
 
-        Type listType = new TypeToken<ArrayList<UserDTO>>() {}.getType();
+        Type listType = new TypeToken<ArrayList<UserDTO>>() {
+        }.getType();
         return users.stream()
                 .map(user -> {
                     UserDTO userDTO = modelMapper.map(user, UserDTO.class);
                     if (user.getTrainer() != null) {
                         userDTO.setTrainer_id(user.getTrainer().getTID());
                     }
-                    if(user.getMealPlan() != null){
+                    if (user.getMealPlan() != null) {
                         userDTO.setMeal_plan_id(user.getMealPlan().getMID());
                     }
-                    if(user.getWorkOutPlan() != null){
+                    if (user.getWorkOutPlan() != null) {
                         userDTO.setWorkout_id(user.getWorkOutPlan().getWID());
                     }
                     return userDTO;
@@ -184,6 +184,26 @@ public class UserService {
 
         return userDTOS;
     }
+
+    /*public List<UserDTO> searchUsersByAge(String age) {
+        List<User> byAge = userRepository.findByAge(age);
+        Type listType = new TypeToken<ArrayList<UserDTO>>() {}.getType();
+        return byAge.stream()
+                .map(user -> {
+                    UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+                    if (user.getTrainer() != null) {
+                        userDTO.setTrainer_id(user.getTrainer().getTID());
+                    }
+                    if(user.getMealPlan() != null){
+                        userDTO.setMeal_plan_id(user.getMealPlan().getMID());
+                    }
+                    if(user.getWorkOutPlan() != null){
+                        userDTO.setWorkout_id(user.getWorkOutPlan().getWID());
+                    }
+                    return userDTO;
+                })
+                .collect(Collectors.toList());
+    }*/
 
 //    public String generateNextUserId() {
 ////        Optional<User> latestUser = userRepository.findTopByOrderByUIDDesc();
