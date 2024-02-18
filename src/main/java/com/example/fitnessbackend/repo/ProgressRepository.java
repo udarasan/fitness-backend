@@ -14,6 +14,6 @@ public interface ProgressRepository extends JpaRepository<Progress, Integer> {
     @Query(value = "SELECT * FROM progress WHERE user_id = ?1", nativeQuery = true)
     List<Progress> findByProgress(int userId);
 
-   /* @Query(value = "select * from progress where MONTH(date) =?1", nativeQuery = true)
-    List<Progress> findByMonth(String month);*/
+   @Query(value = "SELECT * FROM progress WHERE date >= ?1 AND date <= ?2", nativeQuery = true)
+   List<Progress> findByMonth(String startDate, String endDate);
 }

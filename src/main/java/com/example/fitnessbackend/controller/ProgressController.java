@@ -137,12 +137,11 @@ public class ProgressController {
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-/*        @GetMapping(value = "/searchProgressByMonth")
-    public ResponseEntity<ResponseDTO> searchProgressByMonth(@RequestParam String month) {
+    @GetMapping(value = "/searchProgressByMonth/{startDate}/{endDate}")
+    public ResponseEntity<ResponseDTO> searchProgressByMonth(@PathVariable String startDate,@PathVariable String endDate) {
 
         try {
-            List<ProgressDTO> progressDTOS = progressService.searchProgressByMonth(month);
+            List<ProgressDTO> progressDTOS = progressService.searchProgressByMonth(startDate,endDate);
 
 
             if (progressDTOS.isEmpty()) {
@@ -162,6 +161,6 @@ public class ProgressController {
             responseDTO.setData(e);
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }*/
+    }
 
 }
