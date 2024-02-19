@@ -20,8 +20,10 @@ public class TrainerDTO {
     private int tID;
     private String name;
     private String email;
+    // Add other trainer-related fields as needed
+    //private String age;
     private String password;
     private String category;
-    // Add other trainer-related fields as needed
+
     private List<UserDTO> users;
 }
