@@ -95,7 +95,7 @@ public class ProgressService {
 
     }
 
-  public List<ProgressDTO> searchProgressByMonth(String startDate,String endDate) {
+  /*public List<ProgressDTO> searchProgressByMonth(String startDate,String endDate) {
 
         List<Progress> progresses = progressRepository.findByMonth(startDate,endDate);
 
@@ -106,5 +106,5 @@ public class ProgressService {
             equipmentDTOS.add(progressDTO);
         }
         return equipmentDTOS;
-    }
+    }*/
 }

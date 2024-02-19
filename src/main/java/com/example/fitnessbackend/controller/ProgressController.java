@@ -137,7 +137,7 @@ public class ProgressController {
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping(value = "/searchProgressByMonth/{startDate}/{endDate}")
+   /* @GetMapping(value = "/searchProgressByMonth/{startDate}/{endDate}")
     public ResponseEntity<ResponseDTO> searchProgressByMonth(@PathVariable String startDate,@PathVariable String endDate) {
 
         try {
@@ -161,6 +161,6 @@ public class ProgressController {
             responseDTO.setData(e);
             return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }*/
 
 }
