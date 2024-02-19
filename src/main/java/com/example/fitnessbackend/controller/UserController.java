@@ -207,8 +207,8 @@ public class UserController {
     }
 
 
-/*    @GetMapping("/searchUserByAge")
-    public ResponseEntity<ResponseDTO> searchUsersByAge(@RequestParam String age) {
+ /* @GetMapping("/searchUserByAge/{age}")
+    public ResponseEntity<ResponseDTO> searchUsersByAge(@PathVariable String age) {
 
         try {
             List<UserDTO> userDTOS = userService.searchUsersByAge(age);
