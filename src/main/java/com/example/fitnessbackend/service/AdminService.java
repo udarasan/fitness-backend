@@ -17,7 +17,7 @@ public class AdminService {
     @Autowired
     private AdminRepository adminRepository;
 
-    public boolean isValidTrainerCredentials(String email, String password) {
+    public boolean isValidAdminCredentials(String email, String password) {
         Admin  admin= adminRepository.findByEmailAndPassword(email, password);
         return admin != null;
     }

@@ -41,7 +41,7 @@ public class AdminController {
     private EquipmentService equipmentService;
     @PostMapping("/login")
     public ResponseEntity<ResponseDTO> loginAdmin(@RequestBody AdminDTO adminDTO) {
-        if (adminService.isValidTrainerCredentials(adminDTO.getEmail(), adminDTO.getPassword())) {
+        if (adminService.isValidAdminCredentials(adminDTO.getEmail(), adminDTO.getPassword())) {
             responseDTO.setCode(VarList.Created);
             responseDTO.setMessage("success");
             responseDTO.setData(adminDTO);
