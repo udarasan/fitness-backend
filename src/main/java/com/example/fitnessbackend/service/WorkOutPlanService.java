@@ -1,7 +1,9 @@
 package com.example.fitnessbackend.service;
 
+import com.example.fitnessbackend.dto.MealPlanDTO;
 import com.example.fitnessbackend.dto.SavedIdDTO;
 import com.example.fitnessbackend.dto.WorkOutPlanDTO;
+import com.example.fitnessbackend.entity.MealPlan;
 import com.example.fitnessbackend.entity.Trainer;
 import com.example.fitnessbackend.entity.WorkOutPlan;
 import com.example.fitnessbackend.repo.WorkOutPlanRepository;
@@ -11,10 +13,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -74,5 +73,14 @@ public class WorkOutPlanService {
     public int getNumberOfWorkouts() {
         int count = (int) workOutPlanRepository.count();
         return count;
+    }
+
+    public WorkOutPlanDTO searchWorkOutPlan(String id) {
+        if (workOutPlanRepository.existsById(Integer.valueOf(id))) {
+            Optional<WorkOutPlan> workOutPlan = workOutPlanRepository.findById(Integer.valueOf(id));
+            return modelMapper.map(workOutPlan, WorkOutPlanDTO.class);
+        } else {
+            return null;
+        }
     }
 }

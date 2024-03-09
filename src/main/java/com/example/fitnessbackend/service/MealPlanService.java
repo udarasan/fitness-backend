@@ -2,6 +2,7 @@ package com.example.fitnessbackend.service;
 
 import com.example.fitnessbackend.dto.MealPlanDTO;
 import com.example.fitnessbackend.dto.SavedIdDTO;
+import com.example.fitnessbackend.dto.TrainerDTO;
 import com.example.fitnessbackend.dto.UserDTO;
 import com.example.fitnessbackend.entity.MealPlan;
 import com.example.fitnessbackend.entity.Trainer;
@@ -14,10 +15,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -85,4 +83,12 @@ public class MealPlanService {
     }
 
 
+    public MealPlanDTO searchMealPlan(String id) {
+        if (mealPlanRepository.existsById(Integer.valueOf(id))) {
+            Optional<MealPlan> mealPlan = mealPlanRepository.findById(Integer.valueOf(id));
+            return modelMapper.map(mealPlan, MealPlanDTO.class);
+        } else {
+            return null;
+        }
+    }
 }

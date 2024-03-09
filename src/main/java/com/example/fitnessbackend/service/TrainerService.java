@@ -1,5 +1,6 @@
 package com.example.fitnessbackend.service;
 
+import com.example.fitnessbackend.dto.MealPlanDTO;
 import com.example.fitnessbackend.dto.TrainerDTO;
 import com.example.fitnessbackend.dto.UserDTO;
 import com.example.fitnessbackend.dto.WorkOutRecordDTO;
@@ -198,6 +199,16 @@ public class TrainerService {
                 .collect(Collectors.toList());
 
         return trainerDTOS;
+    }
+
+    public TrainerDTO searchWorkOutPlan(String id) {
+
+        if (trainerRepository.existsById(Integer.valueOf(id))) {
+            Optional<Trainer> trainer = trainerRepository.findById(Integer.valueOf(id));
+            return modelMapper.map(trainer, TrainerDTO.class);
+        } else {
+            return null;
+        }
     }
 
  /*   public List<TrainerDTO> searchTrainerWithCategory(String category) {
