@@ -185,6 +185,40 @@ public class UserService {
         return userDTOS;
     }
 
+    public UserDTO searchUserOne(String id) {
+        if (!userRepository.existsById(Integer.valueOf(id))) {
+            return null;
+        }
+
+        Optional<User> userOptional = userRepository.findById(Integer.valueOf(id));
+
+
+        if (!userOptional.isPresent()) {
+            return null;
+        }
+
+        User user = userOptional.get();
+
+        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+
+
+        if (user.getTrainer() != null) {
+            userDTO.setTrainer_id(user.getTrainer().getTID());
+        }
+
+        if (user.getMealPlan() != null) {
+            userDTO.setMeal_plan_id(user.getMealPlan().getMID());
+        }
+
+
+        if (user.getWorkOutPlan() != null) {
+            userDTO.setWorkout_id(user.getWorkOutPlan().getWID());
+        }
+
+        return userDTO;
+    }
+
+
     /*public List<UserDTO> searchUsersByAge(String age) {
         List<User> byAge = userRepository.findByAge(age);
         Type listType = new TypeToken<ArrayList<UserDTO>>() {}.getType();
