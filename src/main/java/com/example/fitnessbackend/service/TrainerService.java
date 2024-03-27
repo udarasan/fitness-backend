@@ -41,7 +41,7 @@ public class TrainerService {
 
     public boolean isValidTrainerCredentials(String username, String password) {
         Trainer trainer = trainerRepository.findByEmailAndPassword(username, password);
-        return trainer != null;
+        return trainer != null && trainer.getStatus().equals("active");
     }
 
     public List<TrainerDTO> getAllTrainers() {
