@@ -92,16 +92,23 @@ public class TrainerService {
         }
     }
 
-    public int deleteTrainer(String id) {
+  /*  public int deleteTrainer(String id) {
         if (!trainerRepository.existsById(Integer.valueOf(id))) {
             return VarList.Not_Acceptable;
         } else {
             trainerRepository.deleteById(Integer.valueOf(id));
             return VarList.Created;
         }
+    }*/
+
+    public int deleteTrainer(TrainerDTO trainerDTO) {
+        if (!trainerRepository.existsByEmail(trainerDTO.getEmail())) {
+            return VarList.Not_Acceptable;
+        } else {
+            trainerRepository.save(modelMapper.map(trainerDTO, Trainer.class));
+            return VarList.Created;
+        }
     }
-
-
     public TrainerDTO searchTrainer(String email) {
 
         if (trainerRepository.existsByEmail(email)) {

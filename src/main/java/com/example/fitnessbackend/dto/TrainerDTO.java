@@ -24,6 +24,6 @@ public class TrainerDTO {
     //private String age;
     private String password;
     private String category;
-
+    private String status;
     private List<UserDTO> users;
 }

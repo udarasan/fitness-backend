@@ -26,7 +26,6 @@ public class Trainer {
     private String password;
     private String category;
     @Column(columnDefinition = "varchar(255) default 'active'")
-
     private String status;
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "trainer")
     private List<User> users;

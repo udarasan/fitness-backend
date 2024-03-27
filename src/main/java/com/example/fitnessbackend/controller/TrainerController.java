@@ -131,16 +131,16 @@ public class TrainerController {
         }
     }
 
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<ResponseDTO> deleteTrainer(@PathVariable String id) {
+    @PostMapping(value = "/delete")
+    public ResponseEntity<ResponseDTO> deleteTrainer(@RequestBody TrainerDTO trainerDTO) {
         System.out.println("delete");
-        System.out.println(id);
+
         try {
-            int res = trainerService.deleteTrainer(id);
+            int res = trainerService.deleteTrainer(trainerDTO);
             if (res==201) {
                 responseDTO.setCode(VarList.No_Content);
                 responseDTO.setMessage("success");
-                responseDTO.setData(id);
+                responseDTO.setData(trainerDTO);
                 return new ResponseEntity<>(responseDTO, HttpStatus.NO_CONTENT);
             } else if (res==406) {
                 responseDTO.setCode(VarList.Not_Acceptable);
