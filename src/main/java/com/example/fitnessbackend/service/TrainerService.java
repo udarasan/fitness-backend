@@ -50,11 +50,30 @@ public class TrainerService {
 //        return modelMapper.map(users, new TypeToken<ArrayList<TrainerDTO>>() {
 //        }.getType());
 
-        List<Trainer> trainers = trainerRepository.findAll();
+       /* List<Trainer> trainers = trainerRepository.findAll();
 
         // Configure modelMapper to handle the mapping of trainer_id in UserDTO
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.STRICT);
+
+        Type listType = new TypeToken<ArrayList<TrainerDTO>>() {}.getType();
+        return trainers.stream()
+                .map(trainer -> {
+                    TrainerDTO trainerDTO = modelMapper.map(trainer, TrainerDTO.class);
+                    List<UserDTO> userDTOs = modelMapper.map(trainer.getUsers(), new TypeToken<ArrayList<UserDTO>>() {}.getType());
+
+                    // Set the trainer_id in each UserDTO
+                    userDTOs.forEach(userDTO -> userDTO.setTrainer_id((trainer.getTID())));
+
+                    trainerDTO.setUsers(userDTOs);
+                    return trainerDTO;
+                })
+                .collect(Collectors.toList());*/
+
+        List<Trainer> trainers = trainerRepository.findByStatus("active");
+
+        // Configure modelMapper to handle the mapping of trainer_id in UserDTO
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
         Type listType = new TypeToken<ArrayList<TrainerDTO>>() {}.getType();
         return trainers.stream()

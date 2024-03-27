@@ -23,7 +23,9 @@ public interface TrainerRepository  extends JpaRepository<Trainer,Integer> {
     List<Trainer> findAllByEmail(String email);
 
     List<Trainer> findByNameStartingWith(String partialName);
+    @Query(value = "select * from trainer where status =?1",nativeQuery = true)
 
+    List<Trainer> findByStatus(String status);
 //    @Query(value = "select * from trainer where category =?1",nativeQuery = true)
 //
 //    List<Trainer> findByTrainerWithCategory(String category);
