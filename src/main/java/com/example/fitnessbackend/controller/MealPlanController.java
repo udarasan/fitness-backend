@@ -172,13 +172,32 @@ public class MealPlanController {
     @PostMapping(value = "/assignNewMealPlan")
     public ResponseEntity<ResponseDTO> assignNewMealPlan(@RequestBody AssignNewMealPlanDTO assignNewMealPlanDTO) {
         try {
+
+
             MealPlanDTO mealPlanDTO = assignNewMealPlanDTO.getMealPlanDTO();
             System.out.println("check "+mealPlanDTO);
             UserDTO userDTO = assignNewMealPlanDTO.getUserDTO();
 
+
+
             SavedIdDTO result = mealPlanService.saveMealPlan(mealPlanDTO);
             int res1 = result.getRes();
             int newMealPlanId = result.getGeneratedId();
+
+            if(mealPlanDTO.getMealType().equals("Breakfast")){
+                userDTO.setBreakFastMeal(String.valueOf(newMealPlanId));
+
+            }
+
+            if(mealPlanDTO.getMealType().equals("Lunch")){
+                userDTO.setLunchMeal(String.valueOf(newMealPlanId));
+
+            }
+
+            if(mealPlanDTO.getMealType().equals("Dinner")){
+                userDTO.setDinnerMeal(String.valueOf(newMealPlanId));
+
+            }
 
             userDTO.setMeal_plan_id(newMealPlanId);
             int res2 = userService.updateUser(userDTO);
