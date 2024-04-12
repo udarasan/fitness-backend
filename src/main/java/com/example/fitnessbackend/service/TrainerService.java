@@ -237,6 +237,8 @@ public class TrainerService {
         }
     }
 
+
+
  /*   public List<TrainerDTO> searchTrainerWithCategory(String category) {
         List<Trainer> trainer=trainerRepository.findByTrainerWithCategory(category);
 
