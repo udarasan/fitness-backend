@@ -173,6 +173,7 @@ public class MealPlanController {
     public ResponseEntity<ResponseDTO> assignNewMealPlan(@RequestBody AssignNewMealPlanDTO assignNewMealPlanDTO) {
         try {
             MealPlanDTO mealPlanDTO = assignNewMealPlanDTO.getMealPlanDTO();
+            System.out.println("check "+mealPlanDTO);
             UserDTO userDTO = assignNewMealPlanDTO.getUserDTO();
 
             SavedIdDTO result = mealPlanService.saveMealPlan(mealPlanDTO);

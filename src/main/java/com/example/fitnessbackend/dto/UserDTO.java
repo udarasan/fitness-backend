@@ -23,4 +23,7 @@ public class UserDTO {
     private int trainer_id;
     private int meal_plan_id;
     private int workout_id;
+    private String breakFastMeal;
+    private String lunchMeal;
+    private String dinnerMeal;
 }

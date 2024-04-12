@@ -25,6 +25,8 @@ public class User {
     private  int age;
     private String gender;
 
+
+
     @ManyToOne
     @JoinColumn(name = "trainer_id")
     private Trainer trainer;
@@ -51,6 +53,11 @@ public class User {
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
     private List<FitnessGoal> fitnessGoals;
+
+
+    private String breakFastMeal;
+    private String lunchMeal;
+    private String dinnerMeal;
 //    @ManyToOne
 //    @JoinColumn(name = "equipment_id")
 //    private Equipment equipment;

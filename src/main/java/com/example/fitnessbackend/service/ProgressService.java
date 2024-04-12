@@ -62,6 +62,7 @@ public class ProgressService {
             ProgressDTO progressDTO = modelMapper.map(progress, ProgressDTO.class);
             // Additional mapping or processing if needed
             progressDTOList.add(progressDTO);
+            System.out.println("check");
         }
 
         return progressDTOList;

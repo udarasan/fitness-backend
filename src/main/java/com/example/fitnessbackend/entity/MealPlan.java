@@ -22,6 +22,7 @@ public class MealPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int mID;
     private String planName;
+    private String mealType;
     @Column(columnDefinition = "TEXT")
     private String planDetails;
     private String calorieCount;

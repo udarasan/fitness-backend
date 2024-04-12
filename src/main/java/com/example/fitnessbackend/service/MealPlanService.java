@@ -51,6 +51,8 @@ public class MealPlanService {
         existingEntity.setPlanName(mealPlanDTO.getPlanName());
         existingEntity.setPlanDetails(mealPlanDTO.getPlanDetails());
         existingEntity.setCalorieCount(mealPlanDTO.getCalorieCount());
+        existingEntity.setMealType(mealPlanDTO.getMealType());
+
         // Update other fields as needed
 
          mealPlanRepository.save(existingEntity);

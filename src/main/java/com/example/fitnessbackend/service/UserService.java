@@ -139,6 +139,8 @@ public class UserService {
     }
 
     public int updateUser(UserDTO userDTO) {
+
+        System.out.println("lol check "+userDTO);
         Optional<User> existingUserOptional = Optional.ofNullable(userRepository.findByEmail(userDTO.getEmail()));
 
         if (existingUserOptional.isPresent()) {

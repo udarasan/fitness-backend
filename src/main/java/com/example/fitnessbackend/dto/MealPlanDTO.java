@@ -15,6 +15,7 @@ public class MealPlanDTO {
 
     private int mid;
     private String planName;
+    private String mealType;
     private String planDetails;
     private String calorieCount;
 
