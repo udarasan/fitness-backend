@@ -18,5 +18,7 @@ public class WorkOutPlanDTO {
     private String planDetails;
     private String burnsCalorieCount;
 
+    private String workOutType;
+
 
 }
