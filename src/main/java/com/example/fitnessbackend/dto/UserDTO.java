@@ -26,4 +26,5 @@ public class UserDTO {
     private String breakFastMeal;
     private String lunchMeal;
     private String dinnerMeal;
+    private String workoutType;
 }
