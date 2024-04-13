@@ -217,6 +217,11 @@ public class TrainerService {
         return count;
     }
 
+    public int getNumberOfActiveTrainers() {
+        int count = trainerRepository.countByStatus("active");
+        return count;
+    }
+
     public List<TrainerDTO> searchTrainerByName(String partialName) {
         List<Trainer> plans = trainerRepository.findByNameStartingWith(partialName);
 

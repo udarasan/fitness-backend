@@ -71,6 +71,23 @@ public class AdminController {
         }
     }
 
+    @GetMapping(value = "/getActiveTrainerCount")
+    public ResponseEntity<ResponseDTO> getNumberOfActiveTrainers() {
+        try {
+            int numberOfTrainers = trainerService.getNumberOfActiveTrainers();
+
+            responseDTO.setCode(VarList.OK);
+            responseDTO.setMessage("Success");
+            responseDTO.setData(numberOfTrainers);
+            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            responseDTO.setCode(VarList.Internal_Server_Error);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setData(null);
+            return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @GetMapping(value = "/getEquipmentCount")
     public ResponseEntity<ResponseDTO> getNumberOfEquipments() {

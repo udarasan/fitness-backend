@@ -26,6 +26,8 @@ public interface TrainerRepository  extends JpaRepository<Trainer,Integer> {
     @Query(value = "select * from trainer where status =?1",nativeQuery = true)
 
     List<Trainer> findByStatus(String status);
+
+    int countByStatus(String status);
 //    @Query(value = "select * from trainer where category =?1",nativeQuery = true)
 //
 //    List<Trainer> findByTrainerWithCategory(String category);
