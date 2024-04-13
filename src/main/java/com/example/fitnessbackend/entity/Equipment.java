@@ -21,5 +21,7 @@ public class Equipment {
     @Temporal(TemporalType.DATE)
     private Date purchaseDate;
 
+    private String checkCondition;
+
 
 }

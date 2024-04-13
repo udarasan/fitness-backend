@@ -15,6 +15,6 @@ public class EquipmentDTO {
     private int eid;
     private String equipmentName;
     private String equipmentDetail;
-
     private Date purchaseDate;
+    private String checkCondition;
 }
