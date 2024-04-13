@@ -58,6 +58,7 @@ public class User {
     private String breakFastMeal;
     private String lunchMeal;
     private String dinnerMeal;
+    private String workoutType;
 //    @ManyToOne
 //    @JoinColumn(name = "equipment_id")
 //    private Equipment equipment;
