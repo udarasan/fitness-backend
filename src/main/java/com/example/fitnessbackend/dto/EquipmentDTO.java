@@ -17,4 +17,5 @@ public class EquipmentDTO {
     private String equipmentDetail;
     private Date purchaseDate;
     private String checkCondition;
+    private Date warrantyEndDate;
 }

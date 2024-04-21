@@ -23,5 +23,6 @@ public class Equipment {
 
     private String checkCondition;
 
-
+    @Temporal(TemporalType.DATE)
+    private Date warrantyEndDate;
 }
