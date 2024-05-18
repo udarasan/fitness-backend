@@ -18,6 +18,7 @@ public class MealPlanDTO {
     private String mealType;
     private String planDetails;
     private String calorieCount;
+    private String category;
 
 
 }

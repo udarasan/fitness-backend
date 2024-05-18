@@ -32,7 +32,6 @@ public class MealPlanService {
     public SavedIdDTO saveMealPlan(MealPlanDTO mealPlanDTO) {
       MealPlan mealPlan=  mealPlanRepository.save(modelMapper.map(mealPlanDTO, MealPlan.class));
 
-
         int generatedId = mealPlan.getMID();
         SavedIdDTO result = new SavedIdDTO(VarList.Created, generatedId);
         return result;

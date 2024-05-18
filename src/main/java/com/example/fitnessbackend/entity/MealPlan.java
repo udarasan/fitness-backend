@@ -27,6 +27,8 @@ public class MealPlan {
     private String planDetails;
     private String calorieCount;
 
+    private String category;
+
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "mealPlan")
     private List<User> user;
 
