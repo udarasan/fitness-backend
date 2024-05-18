@@ -93,7 +93,7 @@ public class AdminController {
     public ResponseEntity<ResponseDTO> getNumberOfEquipments() {
         try {
             int numberOfEquipments = equipmentService.getNumberOfEquipments();
-
+//test
             responseDTO.setCode(VarList.OK);
             responseDTO.setMessage("Success");
             responseDTO.setData(numberOfEquipments);
